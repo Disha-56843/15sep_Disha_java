@@ -1,0 +1,18 @@
+Q-1 What is OOP? List OOP concepts.
+
+Ans.
+
+Object-OrientedProgramminglanguage :
+
+	Object-OrientedProgramming(OOP)language is based 
+upon the objects.object-oriented programming is about cr	eating objects that contain both data and functions. In this programming language, programs are divided into small parts called objects. It is used to implement real-world entities like inheritance, polymorphism, abstraction, etc in the program to make the program resusable, efficient, and easy-to-use.
+
+OOP Concepts :
+
+There is six concepts in OOP
+1.Class
+2.Object
+3.Inheritance
+4.Abstraction
+5.Encapsulation
+6.Polymorphism

@@ -1,0 +1,82 @@
+Q-3 What is the difference between OOP and POP?
+
+Ans.
+
+Object-Oriented Programming (OOP) :
+
+* OOP treats data as a critical element in the program development and does not allow it to flow freely around the system.
+*In OOP, the major emphasis is on data rather than procedure (function).
+*It ties data more closely to the function that operate on it, and protects it from accidental modification from outside function.
+*OOP allows decomposition of a problem into a number of entities called objects and then builds data and function around these objects.
+*The data of an object can be accessed only by the function associated with that object. However, function of one object can access the function of other objects.
+*C++, Java, Dot Net, Python etc are the example of Object oriented programming (OOP) language.
+
+Characteristic of Object Oriented Programming :-
+
+* Emphasis is on data rather than procedure (function).
+* Programs are divided into objects.
+* Functions that operate on the data of an object are ties together in the data structure.
+* Data is hidden and cannot be accessed by external function.
+* Objects may communicate with each other through function.
+* New data and functions can be easily added whenever necessary.
+* Follows bottom up approach in program design.
+
+Features of OOP (Object Oriented Programming) :-
+
+1. Class
+2. Object
+3. Encapsulation
+4. Abstraction
+5. Inheritance
+6. Polymorphism
+
+Procedural Oriented Programming (POP) :
+
+* In the procedure oriented approach, large programs are divided into smaller programs known as functions.
+* In POP, a program is written as a sequence of procedures or function.
+* In POP, each procedure (function) contains a series of instructions for performing a specific task.
+* During the program execution each procedure (function) can be called by the other procedures.
+* To call a procedure (function), we have to write function name only.
+* While we concentrate onto the development of functions, we give very little attention to the data that are being used by various functions.
+* In POP, the major emphasis is on procedure (function) and not on the data. 
+* In a multi-function program, many important data items are placed as global so that they may be accessed by all the functions. Each function may have its own local data.
+* Global data are more vulnerable to an accidental change by a function. In a large program it is very difficult to identify what data is used by which function.
+* Examples of procedural oriented programming language are COBOL, FORTRAN, PASCAL, C programming language etc.
+
+Characteristics of procedure-oriented programming:-
+
+* Large programs are divided into smaller programs known as functions.
+* Most of the functions share global data.
+* Data move openly around the system from function to function.
+* Functions change the value of data at any time from any place. (Functions transform data from one form to another.)
+* It uses top-down approach in program design.
+
+Difference between OOP and POP:
+
+	OOP			POP
+
+*Object oriented.		*Structure oriented.
+
+*Program is divided into objects.	*Program is divided into 				functions.
+
+*Bottom-up approach.		*Top-down approach.
+
+*Inheritance property is used.	*Inheritance is not allowed.
+
+*It uses access specifier.	*It doesn’t use access specifier.
+
+*Encapsulation is used to hide 	*No data hiding.
+the data.	
+
+*Concept of virtual function.	*No virtual function.
+
+*Object functions are linked 	*Parts of program are linked through message passing.	through parameter passing.
+
+*Adding new data and functions 	*Expanding new data and is 
+easy			functions is not easy.
+
+*The existing code can be reused.	*No code reusability.
+
+*use for solving big problems.	*Not suitable for solving big problems.
+
+*C++, Java.		*C, Pascal.

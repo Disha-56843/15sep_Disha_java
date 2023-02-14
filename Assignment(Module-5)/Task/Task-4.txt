@@ -1,0 +1,127 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 08, 2023 at 09:31 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `task-4`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `CNM` int(20) NOT NULL,
+  `CNAME` varchar(50) DEFAULT NULL,
+  `CITY` varchar(30) DEFAULT NULL,
+  `RATING` int(20) DEFAULT NULL,
+  `SNo` int(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`CNM`, `CNAME`, `CITY`, `RATING`, `SNo`) VALUES
+(201, 'Hoffman', 'London', 100, 1001),
+(202, 'Giovanne', 'Roe', 200, 1003),
+(203, 'Liu', 'San Jose', 300, 1002),
+(204, 'Grass', 'Barcelona', 100, 1002),
+(206, 'Clemens', 'London', 300, 1007),
+(207, 'Pereira', 'Roe', 100, 1004);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salesperson`
+--
+
+CREATE TABLE `salesperson` (
+  `SNo` int(20) NOT NULL,
+  `SNAME` varchar(30) DEFAULT NULL,
+  `CITY` varchar(20) DEFAULT NULL,
+  `COMM` decimal(10,4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `salesperson`
+--
+
+INSERT INTO `salesperson` (`SNo`, `SNAME`, `CITY`, `COMM`) VALUES
+(1001, 'Peel', 'London', '0.1200'),
+(1002, 'Serres', 'San Jose', '0.1300'),
+(1003, 'Axelrod', 'New York', '0.1000'),
+(1004, 'Motika', 'London', '0.1100'),
+(1007, 'Rafkin', 'Barcelona', '0.1500');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`CNM`),
+  ADD KEY `SNo` (`SNo`);
+
+--
+-- Indexes for table `salesperson`
+--
+ALTER TABLE `salesperson`
+  ADD PRIMARY KEY (`SNo`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `customer`
+--
+ALTER TABLE `customer`
+  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`SNo`) REFERENCES `salesperson` (`SNo`);
+COMMIT;
+====================================
+(a) All orders for more than $1000.
+---------------------------------------------------------
+Query:-
+
+
+
+(b) Names and cities of all salespeople in London with commission above 0.12
+--------------------------------------------------------------
+Query:-
+SELECT `SNAME`,`CITY`FROM `salesperson` WHERE `COMM`> .12
+
+(c) All salespeople either in Barcelona or in London
+----------------------------------------------------------------
+Query:-SELECT `SNAME` FROM `salesperson`WHERE `city`= 'Barcelona' OR `CITY`= 'London'
+
+(d) All salespeople with commission between 0.10 and 0.12. (Boundary values should be excluded).
+-----------------------------------------------------------------
+Query:-Select `SNAME`, `COMM` from `SALESPERSON` where `COMM` > '0.1000' and `COMM` < '0.1200'; 
+
+(e) All customers excluding those with rating <= 100 unless they are located in Rome
+-------------------------------------------------------------------
+Query:-SELECT `CNAME`,`RATING`,`CITY` FROM `customer` WHERE`RATING`>100 OR `CITY`='roe';
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

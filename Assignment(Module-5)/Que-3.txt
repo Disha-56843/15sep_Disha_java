@@ -1,0 +1,42 @@
+Q : 3 What is Difference between DBMS and RDBMS?
+
+Ans.
+
+Database Management System (DBMS) is a software that is used to define, create and maintain a database and provides controlled access to the data. 
+
+Relational Database Management System (RDBMS) is an advanced version of a DBMS. 
+
+Diffrence between DBMS and RDBMS:
+
+DBMS :
+
+-> Data elements need to access individually.
+-> No relationship between data.
+-> Normalization is not present.
+-> DBMS does not support distributed database.
+-> It stores data in either a navigational or hierarchical form.
+-> It deals with small quantity of data.
+-> Data redundancy is common in this model.
+-> It is used for small organization and deal with small data.
+-> It supports single user.
+-> Data fetching is slower for the large amount of data.
+-> The data in a DBMS is subject to low security levels with regards to data manipulation.
+-> Low sofware and hardware necessities.
+-> Examples : XML, Window Registry,etc.
+
+RDBMS:
+
+-> RDBMS stores data in tabular form.
+-> Multiple data elements can be accessed at the same time.
+-> Data is stored in the form of tables which are related to each other.
+-> Normalization is present.
+-> RDBMS supports distributed database.
+-> It uses a tabular structure where the headers are the column names, and the rows contain corresponding values.
+-> It deals with large amount of data.
+-> Keys and indexes do not allow Data redundancy.
+-> It is used to handle large amount of data.
+-> It supports multiple users.
+-> Data fetching is fast because of relational approach.
+-> There exists multiple levels of data security in a RDBMS.
+-> Higher software and hardware necessities.
+-> Examples: MySQL, PostgreSQL, SQL Server, Oracle, Microsoft Access etc.

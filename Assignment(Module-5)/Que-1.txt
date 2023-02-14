@@ -1,0 +1,15 @@
+Q : 1 What do you understand By Database.
+
+Ans. 
+
+	A collection of information which is managed such that it can be updated and easily accessed is called a database. A software package which can be used to manipulate, validate and retrieve this database is called a Database Management System.
+
+	In simple words, data can be facts related to any object in consideration. For example, your name, age, height, weight, etc. are some data related to you. A picture, image, file, pdf, etc. can also be considered data.
+
+	A database is a systematic collection of data.Databases make data management easy.In database you can organize the data in rows and columns in the form of table.
+
+	 Let us discuss a database example:university database organizes the data about students, faculty, and admin staff etc. which helps in efficient retrieval, insertion and deletion of data from it.
+
+Database Access Language:
+
+	Database Access language is used to access the data in database, enter new data, update already existing data, or retrieve required data from DBMS. The user writes some specific commands in a database access language and submits these to the database.

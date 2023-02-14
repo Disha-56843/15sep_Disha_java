@@ -1,0 +1,60 @@
+Q : 5 What do you understand By Data Redundancy?
+
+Ans. 
+
+	Data redundancy is when multiple copies of the same information are stored in more than one place at a time. This challenge plagues organizations of all sizes in all industries and leads to elevated storage costs, errors, and compromised analytics. A typical example of this is customer information that is replicated across departments’ separate systems (e.g., finance, marketing, sales).
+
+	Though often considered a problem, data redundancy can be useful. Repetition of information across multiple systems, as noted above, does become problematic. However, when used for backup or data security, data redundancy is valuable.
+
+How Data Redundancy Occurs :
+
+When data redundancy is unintentional, there are a number of ways that it can occur. Following are a few examples of how data redundancy occurs; this understanding can help to avoid it.
+
+* Forms that collect the same information in different fields (e.g., first name/last name, first/last)
+* Multiple backups of the same data by individuals or groups who are unaware that the other is creating a backup
+* Older versions of backups being saved rather than deleted or overwritten by newer versions
+* Poor coding within a data management system that causes data not to update correctly, resulting in discrepancies within the database 
+* Separate systems that collect and store the same information (e.g., customer information collected and stored in finance, sales, and marketing systems)
+
+ File-Based Data Redundancy :
+
+Data redundancy can occur no matter what system is used for storing information, including in databases and file-based structures.
+
+  * Databases, also referred to as database management systems      (DBMS), are software for storing and retrieving data.
+  * File systems arrange different file types (e.g., .doc, .xls, .txt,      MP4) in a storage medium (e.g., internal or external hard      drives and/or Google Workspace). 
+
+Benefits of Data Redundancy :
+
+Data redundancy is often considered a bad thing, but there are a number of reasons that data redundancy makes sense, including as part of backup and data security protocols. Benefits of data redundancy, when executed purposefully as part of an overall data management plan, include:
+
+* Creating data backups—to provide redundancy in the event of a malicious or unintended data loss or compromise.
+
+* Eliminating single points of failure—by having data backed up and easily accessible to expedite the restoration of services.
+
+* Ensuring data accuracy—to allow for enhanced data quality assurance by providing users with the ability to cross-reference sources to identify discrepancies that need to be corrected. 
+
+* Expediting recovery—to minimize downtime by accelerating restoration time with ready access to critical data.  
+
+* Improving data protection—to minimize the attack surface and accessible amount of data from a single source in the event of a data breach. 
+
+* Increasing data availability—to make it easier and faster for users to access data by having it stored in multiple locations with different data entry points.
+
+* Meeting customers’ service level agreements (SLAs) that depend on data availability and security—to avoid costly compensation related to data loss or downtime due to data being inaccessible.
+
+* Providing contingency data access—to ensure business continuity and maximum uptime in the event of a data loss or disruption due to internal issues or malware.
+
+* Take advantage of flexible storage options—to enable data redundancy and support data sharing.
+
+Data Redundancy Disadvantages : 
+
+When not for an explicit purpose (e.g., data backup, data security), redundant data causes problems. The list of data redundancy disadvantages is long. Key reasons to avoid data redundancy are that it:
+
+* Allows for data corruption caused by damage or errors sustained during the process of storage and transfer of data across multiple locations 
+
+* Increases data maintenance costs by requiring multiple copies of the same content to be maintained with costly data management programs
+
+* Increases discrepancies between data that is stored in more than one location (i.e., often updates are made to one version and not to the others)
+
+* Slows down the essential functions of a database, complicating its usage for certain tasks, including data retrieval
+
+* Wastes valuable storage space by saving the same data on multiple systems, which may start small, but can grow quickly

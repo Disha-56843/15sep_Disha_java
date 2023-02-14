@@ -1,0 +1,174 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 12, 2023 at 09:17 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `task-3`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `Employee_id` int(30) DEFAULT NULL,
+  `First_name` varchar(50) DEFAULT NULL,
+  `Last_name` varchar(50) DEFAULT NULL,
+  `Salary` int(20) DEFAULT NULL,
+  `Joining_date` varchar(25) DEFAULT NULL,
+  `Department` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`Employee_id`, `First_name`, `Last_name`, `Salary`, `Joining_date`, `Department`) VALUES
+(1, 'John', 'Abraham', 1000000, '01-JAN-13 12.00.00 AM', 'Banking'),
+(2, 'Michael', 'Clarke', 800000, '01-JAN-13 12.00.00 AM', 'Insurance'),
+(3, 'Roy', 'Thomas', 700000, '01-FEB-13 12.00.00 AM', 'Banking'),
+(4, 'Tom', 'Jose', 600000, '01-FEB-13 12.00.00 AM', 'Insurance'),
+(5, 'Jerry', 'Pinto', 650000, '01-FEB-13 12.00.00 AM', 'Insurance'),
+(6, 'Philip', 'Mathew', 750000, '01-JAN-13 12.00.00 AM', 'Services'),
+(7, 'TestName1', '123', 650000, '01-JAN-13 12.00.00 AM', 'Services'),
+(8, 'TestName2', 'Lname%', 600000, '01-FEB-13 12.00.00 AM', 'Insurance');
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `incentive`
+--
+
+CREATE TABLE `incentive` (
+  `Employee_ref_id` int(30) DEFAULT NULL,
+  `Incentive_date` varchar(20) DEFAULT NULL,
+  `Incentive_amount` int(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `incentive`
+--
+
+INSERT INTO `incentive` (`Employee_ref_id`, `Incentive_date`, `Incentive_amount`) VALUES
+(1, '01-Feb-13', 5000),
+(2, '01-Feb-13', 3000),
+(3, '01-Feb-13', 4000),
+(1, '01-Jan-13', 4500),
+(2, '01-Jan-13', 3500);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `view`
+--
+
+CREATE TABLE `view` (
+  `Employee_id` int(20) DEFAULT NULL,
+  `FIRSt_name` varchar(20) DEFAULT NULL,
+  `Last_name` varchar(20) DEFAULT NULL,
+  `Salary` int(20) DEFAULT NULL,
+  `Joining_date` varchar(25) DEFAULT NULL,
+  `Department` varchar(20) DEFAULT NULL,
+  `Dt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `view`
+--
+
+INSERT INTO `view` (`Employee_id`, `FIRSt_name`, `Last_name`, `Salary`, `Joining_date`, `Department`, `Dt`) VALUES
+(1, 'John', 'Abraham', 1000000, '01-JAN-13 12.00.00 AM', 'Banking', '2023-02-12 08:13:18'),
+(2, 'Michael', 'Clarke', 800000, '01-JAN-13 12.00.00 AM', 'Insurance', '2023-02-12 08:13:18'),
+(3, 'Roy', 'Thomas', 700000, '01-FEB-13 12.00.00 AM', 'Banking', '2023-02-12 08:13:18'),
+(4, 'Tom', 'Jose', 600000, '01-FEB-13 12.00.00 AM', 'Insurance', '2023-02-12 08:13:18'),
+(5, 'Jerry', 'Pinto', 650000, '01-FEB-13 12.00.00 AM', 'Insurance', '2023-02-12 08:13:18'),
+(6, 'Philip', 'Mathew', 750000, '01-JAN-13 12.00.00 AM', 'Services', '2023-02-12 08:13:18'),
+(7, 'TestName1', '123', 650000, '01-JAN-13 12.00.00 AM', 'Services', '2023-02-12 08:13:18'),
+(8, 'TestName2', 'Lname%', 600000, '01-FEB-13 12.00.00 AM', 'Insurance', '2023-02-12 08:13:18');
+COMMIT;
+
+======================================
+a) Get First_Name from employee table using Tom name “Employee Name”.
+--------------------------------------------------------------
+Query:-
+
+
+
+b) Get FIRST_NAME, Joining Date, and Salary from employee table.
+----------------------------------------------------------------
+Query:-
+
+SELECT `First_name`,`Joining_date`,`Salary` FROM `employee`;
+
+
+c) Get all employee details from the employee table order by First_Name Ascending and Salary descending?
+------------------------------------------------------------------
+Query:-
+
+SELECT * FROM `employee` ORDER BY `First_name` ASC , `Salary` DESC;
+
+
+d) Get employee details from employee table whose first name contains ‘J’.
+---------------------------------------------------------------------
+Query:-
+
+SELECT * FROM `employee` WHERE `First_name` LIKE 'J%';
+
+
+e) Get department wise maximum salary from employee table order by salary ascending?
+-----------------------------------------------------------------------
+Query:-
+
+SELECT `Department`, MAX(Salary) Maxsalary
+FROM `employee` GROUP BY `Department` ORDER BY Maxsalary ASC;
+
+
+f) Select first_name, incentive amount from employee and incentives table for those employees who have incentives and incentive amount greater than 3000.
+-----------------------------------------------------------------------
+Query:-
+
+SELECT First_name , incentive_amount 
+FROM employee A INNER JOIN incentive B 
+  ON A.Employee_id = B.Employee_ref_id 
+AND incentive_amount >3000;
+
+
+g) Create After Insert trigger on Employee table which insert records in view table
+-------------------------------------------------------------------------
+Query:-
+
+--
+-- Triggers `employee`
+--
+DELIMITER $$
+CREATE TRIGGER `trigg` AFTER INSERT ON `employee` FOR EACH ROW BEGIN
+    
+    INSERT INTO view SET `Employee_id` = new.Employee_id , `First_name` = new.First_name , `Last_name` = new.Last_name , `Salary` = new.Salary , `Joining_date` = new.Joining_date , `Department` = new.Department ;
+    
+    END
+$$
+DELIMITER ;
+
+===========================================
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

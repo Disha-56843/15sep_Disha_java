@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="leftContainer">
+            <div>
+                <h2 class="head">Disha's Team</h2>
+                <p>Location ID#SIMON123</p>
+
+                <input id="search-product" class="input" type="text">
+
+
+            </div>
+            <ul id="category-list">
+                <li class="list-item" onclick="sortProducts('all', this)">All items</li>
+                <li class="list-item" onclick="sortProducts('Men Shirt', this)">Men_Shirt</li>
+                <li class="list-item" onclick="sortProducts('Women Shirt', this)">Women_Shirt</li>
+                <li class="list-item" onclick="sortProducts('Men Jeans', this)">Men_Jeans</li>
+                <li class="list-item" onclick="sortProducts('Women Jeans', this)">Women_Jeans</li>
+            </ul>
+            <h1 class="no-data">No Data Found</h1>
+            <div class="cards" id="products">
+                <div class="card" data-category="Men Shirt">
+                    <h3 class="item-name">STONEBERG</h3>
+                    <span class="text-grey">Men Formal Shirt</span><br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img1.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Men Shirt">
+                    <h3 class="item-name">FIBERMILL</h3>
+                    <span class="text-grey">Men Printed Shirt</span><br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img2.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Women Shirt">
+                    <h3 class="item-name">CHEMISTRY</h3>
+                    <span class="text-grey">Women Casual Shirt</span> <br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img3.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Women Shirt">
+                    <h3 class="item-name">J TURRITOPSIS</h3>
+                    <span class="text-grey">Women Retro Shirts</span> <br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img4.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Women Shirt">
+                    <h3 class="item-name">zenesty</h3>
+                    <span class="text-grey">Women Casual Shirt</span> <br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img5.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Men Jeans">
+                    <h3 class="item-name">Spykar</h3>
+                    <span class="text-grey">Men Skinny Fit Jeans</span> <br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img6.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Men Jeans">
+                    <h3 class="item-name">JACK & JONES</h3>
+                    <span class="text-grey">Men Skinny Fit Jeans </span> <br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img7.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Women Jeans">
+                    <h3 class="item-name">TYFFYN</h3>
+                    <span class="text-grey">Women Black Jeans</span><br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img8.jpg" alt="" class="card-img">
+                </div>
+                <div class="card" data-category="Women Jeans">
+                    <h3 class="item-name">Miss Chase </h3>
+                    <span class="text-grey">Women Black Jeans</span><br><br>
+                    <span class="text-yellow js-item-price">$1.75</span>
+                    <img src="./Image/img9.jpg" alt="" class="card-img">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="right">
+
+            <div class="menu">
+
+                <h2>Current Order</h2>
+                <button class="bg-red button1 padding">Clear All</button>
+                <button class="button2 padding">Setting</button>
+
+            </div>
+
+            <div class="order">
+
+                <div class="item item1"></div>
+                <div class="item item2"></div>
+                <div class="item item3"></div>
+                <div class="item item4"></div>
+                <div class="item item5"></div>
+                <div class="item item6"></div>
+
+            </div>
+
+            <div class="total">
+                <div class="flex">
+                    <span>Subtotal</span>
+                    <h3>$35.25</h3>
+                </div>
+                <div class="flex">
+                    <span>Discount</span>
+                    <h3>- $5.00</h3>
+                </div>
+                <div class="flex">
+                    <hspan4>Sales Tax</hspan4>
+                    <h3>$2.25</h3>
+                </div>
+                <hr>
+                <div class="flex">
+                    <h2>Total</h2>
+                    <h2>$37.50</h2>
+                </div>
+            </div>
+            <div class="pay">
+
+                <span class="cashless"><b>cashless credit</b></span><br>
+                <span class="text-yellow font-size-larger">$32.50</span><br>
+                <span>Available</span>
+                <button class="cancle-button">Cancel</button>
+
+
+            </div>
+            <button class="paybtn">Pay With Cashless Credit</button>
+
+        </div>
+    </div>
+
+    <script src="./product_sort.js"></script>
+    <script src="./product_search.js"></script>
+</body>
+
+</html>

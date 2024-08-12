@@ -179,9 +179,10 @@ input {
 }
 
 .card-img {
-    height: 60px;
+    height: 70px;
     width: 80px;
     margin-left: 25%;
+    margin-top: 20px;
 }
 
 .order-img {
@@ -212,12 +213,13 @@ input {
     line-height: 3;
 }
 
-.btn {
+#cart-item .btn {
     height: 40px;
     width: 40px;
     margin-top: 2%;
     border-radius: 10px;
     border: none;
+    background-color: lightgrey;
 }
 
 .total {
@@ -340,16 +342,16 @@ hr {
     display: grid;
     padding-top: 10px;
     grid-template-columns: 200px 200px 200px;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: 150px 150px 150px;
     justify-content: space-around;
-    gap: 15px;
+    gap: 25px;
     background-color: transparent;
 }
 
 .products {
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid transparent;
+    border: 1px solid #bdbaba;
 }
 
 .products:hover {
@@ -368,4 +370,12 @@ hr {
 
 .price-of-product {
     color: #eab308;
+}
+
+.line-hight {
+    line-height: 3.5;
+}
+
+.quantity {
+    line-height: 3.5;
 }

@@ -1,7 +1,7 @@
 function sortSearch(category, searchInputValue) {
     let visibleProducts = false
     const nodata = document.querySelector('.no-data')
-    
+
     document.querySelectorAll('.products').forEach(product => {
         const productName = product.querySelector('.item-name').innerHTML
         const productPrice = product.querySelector('.price-product').innerHTML

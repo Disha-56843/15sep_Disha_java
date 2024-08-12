@@ -333,3 +333,52 @@ hr {
     border-radius: 20px;
     color: #fff;
 }
+
+.products-container
+{
+    height: auto;
+    width: 100%;
+    display: grid;
+    padding-top: 10px;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: auto auto auto;
+    justify-content: space-around;
+    gap: 15px;
+    background-color: transparent;
+}
+
+.products
+{
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.products:hover
+{
+    border: 1px solid #eab308;
+}
+
+.bottom-part-of-product
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: last baseline;
+}
+
+.product-img
+{
+    height: 70px;
+    width: 75px;
+    border-radius: 5px;
+}
+
+.description
+{
+    color: #a39e9e;
+}
+
+.price-of-product
+{
+    color: #eab308;
+}

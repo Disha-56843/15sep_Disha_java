@@ -20,69 +20,14 @@
 
             </div>
             <ul id="category-list">
-                <li class="list-item" onclick="sortProducts('all', this)">All items</li>
-                <li class="list-item" onclick="sortProducts('Men Shirt', this)">Men_Shirt</li>
-                <li class="list-item" onclick="sortProducts('Women Shirt', this)">Women_Shirt</li>
-                <li class="list-item" onclick="sortProducts('Men Jeans', this)">Men_Jeans</li>
-                <li class="list-item" onclick="sortProducts('Women Jeans', this)">Women_Jeans</li>
+                <li class="select list-item" onclick="updateCategoryUI('all')">All items</li>
+                <li class="list-item" onclick="updateCategoryUI('Men Shirt')">Men Shirt</li>
+                <li class="list-item" onclick="updateCategoryUI('Women Shirt')">Women Shirt</li>
+                <li class="list-item" onclick="updateCategoryUI('Men Jeans')">Men Jeans</li>
+                <li class="list-item" onclick="updateCategoryUI('Women Jeans')">Women Jeans</li>
             </ul>
-            <h1 class="no-data">No Data Found</h1>
-            <div class="cards" id="products">
-                <div class="card" data-category="Men Shirt">
-                    <h3 class="item-name">STONEBERG</h3>
-                    <span class="text-grey">Men Formal Shirt</span><br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img1.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Men Shirt">
-                    <h3 class="item-name">FIBERMILL</h3>
-                    <span class="text-grey">Men Printed Shirt</span><br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img2.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Women Shirt">
-                    <h3 class="item-name">CHEMISTRY</h3>
-                    <span class="text-grey">Women Casual Shirt</span> <br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img3.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Women Shirt">
-                    <h3 class="item-name">J TURRITOPSIS</h3>
-                    <span class="text-grey">Women Retro Shirts</span> <br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img4.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Women Shirt">
-                    <h3 class="item-name">zenesty</h3>
-                    <span class="text-grey">Women Casual Shirt</span> <br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img5.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Men Jeans">
-                    <h3 class="item-name">Spykar</h3>
-                    <span class="text-grey">Men Skinny Fit Jeans</span> <br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img6.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Men Jeans">
-                    <h3 class="item-name">JACK & JONES</h3>
-                    <span class="text-grey">Men Skinny Fit Jeans </span> <br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img7.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Women Jeans">
-                    <h3 class="item-name">TYFFYN</h3>
-                    <span class="text-grey">Women Black Jeans</span><br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img8.jpg" alt="" class="card-img">
-                </div>
-                <div class="card" data-category="Women Jeans">
-                    <h3 class="item-name">Miss Chase </h3>
-                    <span class="text-grey">Women Black Jeans</span><br><br>
-                    <span class="text-yellow js-item-price">$1.75</span>
-                    <img src="./Image/img9.jpg" alt="" class="card-img">
-                </div>
-
+            <div class="cards products-container" id="products">
+                <h1 class="no-data">No Data Found</h1>
             </div>
         </div>
 
@@ -117,7 +62,7 @@
                     <h3>- $5.00</h3>
                 </div>
                 <div class="flex">
-                    <hspan4>Sales Tax</hspan4>
+                    <span>Sales Tax</span>
                     <h3>$2.25</h3>
                 </div>
                 <hr>
@@ -140,8 +85,10 @@
         </div>
     </div>
 
-    <script src="./product_sort.js"></script>
-    <script src="./product_search.js"></script>
+    <!-- <script src="./product_sort.js"></script>
+    <script src="./product_search.js"></script> -->
+    <script src="./product.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>

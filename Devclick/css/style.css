@@ -283,7 +283,7 @@ input {
     cursor: pointer;
 }
 
-ul li:hover {
+ul .list-item:hover {
     padding: 1%;
     background-color: #eab308;
     border-radius: 20px;
@@ -334,8 +334,7 @@ hr {
     color: #fff;
 }
 
-.products-container
-{
+.products-container {
     height: auto;
     width: 100%;
     display: grid;
@@ -347,38 +346,26 @@ hr {
     background-color: transparent;
 }
 
-.products
-{
+.products {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid transparent;
 }
 
-.products:hover
-{
+.products:hover {
     border: 1px solid #eab308;
 }
 
-.bottom-part-of-product
-{
+.bottom-part-of-product {
     display: flex;
     justify-content: space-between;
     align-items: last baseline;
 }
 
-.product-img
-{
-    height: 70px;
-    width: 75px;
-    border-radius: 5px;
-}
-
-.description
-{
+.description {
     color: #a39e9e;
 }
 
-.price-of-product
-{
+.price-of-product {
     color: #eab308;
 }

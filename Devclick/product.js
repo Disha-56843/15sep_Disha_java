@@ -17,7 +17,7 @@ const products = [
         alt: 'product2',
         category: 'Men Shirt'
     },
-    
+
     {
         name: 'CHEMISTRY',
         description: 'Women Casual Shirt',
@@ -82,55 +82,135 @@ const products = [
     }
 ]
 
-function Products() {
+function showProducts() {
 
     const Product_container = document.querySelector('.products-container')
 
     products.forEach(product => {
-        
+
         const productDiv = document.createElement('div')
         productDiv.className = 'products'
         productDiv.style.cursor = 'pointer'
 
-        productDiv.setAttribute('data-category', product.category)        
-        
-        const topPart = document.createElement('div')
-        topPart.className = 'top-part-of-product'
-        
+        productDiv.setAttribute('data-category', product.category)
+
         const productName = document.createElement('h3')
         productName.className = 'item-name'
         productName.innerHTML = product.name
-        
+
         const description = document.createElement('span')
         description.className = 'description'
         description.innerHTML = product.description
-        
-        topPart.appendChild(productName)
-        topPart.appendChild(description)
-        
+
         const bottomPart = document.createElement('div')
         bottomPart.className = 'bottom-part-of-product'
-        
+
         const price = document.createElement('span')
         price.className = 'price-product'
         price.innerHTML = product.price
-        
+
         const image = document.createElement('img')
         image.src = product.image
         image.alt = product.name
-        image.className = 'product-img'
-        
+        image.className = 'card-img'
+
         bottomPart.appendChild(price)
         bottomPart.appendChild(image)
-        
-        productDiv.appendChild(topPart)
+
+        productDiv.appendChild(productName)
+        productDiv.appendChild(description)
         productDiv.appendChild(bottomPart)
 
-        
+
         Product_container.appendChild(productDiv)
+
+        productDiv.addEventListener('click', () => addToCart(product));
+
     })
 }
 
-Products()
+showProducts()
 
 
+function addToCart(product) {
+    const cartItemList = document.getElementById('cart-item');
+
+    const items = cartItemList.children;
+    let existingItem = null;
+
+    
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].dataset.name === product.name) {
+            existingItem = items[i];
+            break;
+        }
+    }
+
+    // console.log(existingItem)
+
+    if (existingItem) {
+
+        let quantitySpan = existingItem.querySelector('.quantity');
+        let quantity = parseInt(quantitySpan.textContent.trim());
+        quantity++;
+        quantitySpan.textContent = quantity;
+
+        let price = parseFloat(existingItem.dataset.price);
+        existingItem.querySelector('.line-hight').textContent = '$' + (price * quantity)
+    } else {
+
+        const li = document.createElement('li');
+        li.className = 'item';
+        li.dataset.name = product.name;
+        li.dataset.price = product.price.replace('$', '');
+
+        const img = document.createElement('img');
+        img.src = product.image;
+        img.alt = product.name;
+        img.className = 'order-img';
+
+        const name = document.createElement('h4');
+        name.textContent = product.name;
+
+        const plusBtn = document.createElement('button');
+        // plusBtn.className = 'btn';
+        plusBtn.textContent = '+';
+        plusBtn.classList.add('btn')
+
+        const quantity = document.createElement('span');
+        quantity.className = 'quantity';
+        quantity.textContent = '1';
+
+        const minusBtn = document.createElement('button');
+        // minusBtn.className = 'btn';
+        minusBtn.textContent = '-';
+        minusBtn.classList.add('btn')
+        
+        const price = document.createElement('h3');
+        price.className = 'line-hight';
+        price.textContent = product.price;
+
+        li.appendChild(img);
+        li.appendChild(name);
+        li.appendChild(plusBtn);
+        li.appendChild(quantity);
+        li.appendChild(minusBtn);
+        li.appendChild(price);
+
+        cartItemList.appendChild(li);
+    }
+
+}
+
+
+document.getElementById('clear-all-button').addEventListener('click', function() {
+    
+    const cartItemList = document.getElementById('cart-item');
+    
+    
+    while (cartItemList.firstChild) {
+        cartItemList.removeChild(cartItemList.firstChild);
+    }
+
+    updateCartSummary();
+});

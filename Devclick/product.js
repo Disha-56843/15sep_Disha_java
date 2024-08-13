@@ -1,4 +1,4 @@
-const products = [
+const product = [
 
     {
         name: 'STONEBERG',
@@ -84,9 +84,10 @@ const products = [
 
 function showProducts() {
 
-    const Product_container = document.querySelector('.products-container')
+    const productContainer = document.querySelector('.products-container')
+    caselessContainer = document.querySelector('.pay')
 
-    products.forEach(product => {
+    product.forEach(product => {
 
         const productDiv = document.createElement('div')
         productDiv.className = 'products'
@@ -102,8 +103,8 @@ function showProducts() {
         description.className = 'description'
         description.innerHTML = product.description
 
-        const bottomPart = document.createElement('div')
-        bottomPart.className = 'bottom-part-of-product'
+        const bottomPartOfProductContainer = document.createElement('div')
+        bottomPartOfProductContainer.className = 'bottom-part-of-product'
 
         const price = document.createElement('span')
         price.className = 'price-product'
@@ -114,17 +115,17 @@ function showProducts() {
         image.alt = product.name
         image.className = 'card-img'
 
-        bottomPart.appendChild(price)
-        bottomPart.appendChild(image)
+        bottomPartOfProductContainer.appendChild(price)
+        bottomPartOfProductContainer.appendChild(image)
 
         productDiv.appendChild(productName)
         productDiv.appendChild(description)
-        productDiv.appendChild(bottomPart)
+        productDiv.appendChild(bottomPartOfProductContainer)
 
 
-        Product_container.appendChild(productDiv)
+        productContainer.appendChild(productDiv)
 
-        productDiv.addEventListener('click', () => addToCart(product));
+        productDiv.addEventListener('click', () => addToCart(product))
 
     })
 }
@@ -133,78 +134,139 @@ showProducts()
 
 
 function addToCart(product) {
-    const cartItemList = document.getElementById('cart-item');
+    const cartItemList = document.getElementById('cart-item')
 
-    let existingItem = Array.from(cartItemList.children).find(function (li) {
+    const existingItem = Array.from(cartItemList.children).some(function (li) {
         return li.dataset.name === product.name;
     });
 
-    // console.log(existingItem)
 
     if (existingItem) {
 
-        let quantitySpan = existingItem.querySelector('.quantity');
+        let quantitySpan = document.querySelector('.quantity');
         let quantity = parseInt(quantitySpan.textContent.trim());
         quantity++;
         quantitySpan.textContent = quantity;
 
-        let price = parseFloat(existingItem.dataset.price);
-        existingItem.querySelector('.line-hight').textContent = '$' + (price * quantity)
-    } else {
+        let price = parseFloat(cartItemList.dataset.price);
+        document.querySelector('.line-hight').textContent = '$' + (price * quantity).toFixed(2);
 
-        const li = document.createElement('li');
-        li.className = 'item';
-        li.dataset.name = product.name;
-        li.dataset.price = product.price.replace('$', '');
+        updateCart();
 
-        const img = document.createElement('img');
-        img.src = product.image;
-        img.alt = product.name;
-        img.className = 'order-img';
 
-        const name = document.createElement('h4');
-        name.textContent = product.name;
-
-        const plusBtn = document.createElement('button');
-        // plusBtn.className = 'btn';
-        plusBtn.textContent = '+';
-        plusBtn.classList.add('btn')
-
-        const quantity = document.createElement('span');
-        quantity.className = 'quantity';
-        quantity.textContent = '1';
-        // quantity.classList.add('line-hight');
-
-        const minusBtn = document.createElement('button');
-        // minusBtn.className = 'btn';
-        minusBtn.textContent = '-';
-        minusBtn.classList.add('btn')
-
-        const price = document.createElement('h3');
-        price.className = 'line-hight';
-        price.textContent = product.price;
-
-        li.appendChild(img);
-        li.appendChild(name);
-        li.appendChild(plusBtn);
-        li.appendChild(quantity);
-        li.appendChild(minusBtn);
-        li.appendChild(price);
-
-        cartItemList.appendChild(li);
     }
+    else {
+        const li = document.createElement('li')
+        li.className = 'item'
+        li.dataset.name = product.name
+        li.dataset.price = product.price.replace('$', '')
+
+        const img = document.createElement('img')
+        img.src = product.image
+        img.alt = product.name
+        img.className = 'order-img'
+
+        const name = document.createElement('h4')
+        name.innerText = product.name
+
+        const plusButton = document.createElement('button')
+        plusButton.innerText = '+'
+        plusButton.classList.add('button')
+        plusButton.addEventListener('click', () => {
+            let quantitySpan = li.querySelector('.quantity')
+            let quantity = parseInt(quantitySpan.innerText)
+            if (quantity < 3) {
+                quantity++
+                quantitySpan.innerText = quantity
+
+                let price = parseFloat(li.dataset.price)
+                li.querySelector('.line-hight').innerText = '$' + (price * quantity).toFixed(2)
+            }
+            else {
+                alert('You can buy only up to 3 unit(s) of this product')
+            }
+
+            updateCart()
+        })
+
+        const quantity = document.createElement('span')
+        quantity.className = 'quantity'
+        quantity.innerText = '1'
+
+        const minusButton = document.createElement('button')
+        minusButton.innerText = '-'
+        minusButton.classList.add('button')
+        minusButton.addEventListener('click', () => {
+            let quantitySpan = li.querySelector('.quantity')
+            let quantity = parseInt(quantitySpan.innerText.trim())
+            if (quantity > 1) {
+                quantity--
+                quantitySpan.innerText = quantity
+
+                let price = parseFloat(li.dataset.price)
+                console.log(price)
+                li.querySelector('.line-hight').innerText = '$' + (price * quantity).toFixed(2)
+            }
+            li.remove()
+
+            if (cartItemList.children.length === 0 ) {
+                if (window.confirm('Are you sure you want to remove this item?') === true) {
+
+                    li.remove()
+
+                }
+            }
+
+            updateCart()
+        })
+
+        const price = document.createElement('h3')
+        price.className = 'line-hight'
+        price.innerText = product.price
+
+        li.appendChild(img)
+        li.appendChild(name)
+        li.appendChild(minusButton)
+        li.appendChild(quantity)
+        li.appendChild(plusButton)
+        li.appendChild(price)
+
+        cartItemList.appendChild(li)
+    }
+
+    updateCart()
 
 }
 
+function updateCart() {
+    const cartItemList = document.getElementById('cart-item')
+    let subtotal = 0
+
+    Array.from(cartItemList.children).forEach(li => {
+        const price = parseFloat(li.dataset.price)
+        const quantity = parseInt(li.querySelector('.quantity').innerText.trim())
+        subtotal += price * quantity
+    })
+
+    const discount = (5 * subtotal) / 100
+    const salesTax = (18 * subtotal) / 100
+    const total = subtotal - discount + salesTax
+
+    document.querySelector('.js-subtotal').innerText = '$' + subtotal.toFixed(2)
+    document.querySelector('.total .flex:nth-child(2) h3').innerText = '- $' + discount.toFixed(2)
+    document.querySelector('.total .flex:nth-child(3) h3').innerText = '$' + salesTax.toFixed(2)
+    document.querySelector('.js-total-of-product').innerText = '$' + total.toFixed(2)
+
+}
 
 document.getElementById('clear-all-button').addEventListener('click', function () {
 
-    const cartItemList = document.getElementById('cart-item');
-
+    const cartItemList = document.getElementById('cart-item')
 
     while (cartItemList.firstChild) {
-        cartItemList.removeChild(cartItemList.firstChild);
-    }
+        cartItemList.removeChild(cartItemList.firstChild)
+        updateCart()
 
-    // updateCartSummary();
-});
+    }
+})
+

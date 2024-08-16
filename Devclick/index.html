@@ -9,29 +9,36 @@
 </head>
 
 <body>
+
     <div class="container">
+
         <div class="leftContainer">
+
             <div>
-                <h2 class="head">Disha's Team</h2>
-                <p>Location ID#SIMON123</p>
 
-                <input id="search-product" class="input" type="text">
+                <h2 class="head">Disha's Team <h2>
 
+                        <p>Location ID#SIMON123</p>
+
+                        <input id="search-product" class="input" type="text">
 
             </div>
+
             <ul id="category-list">
-                <li class="select list-item" onclick="updateCategoryUI('all')">All items</li>
-                <li class="list-item" onclick="updateCategoryUI('Men Shirt')">Men Shirt</li>
-                <li class="list-item" onclick="updateCategoryUI('Women Shirt')">Women Shirt</li>
-                <li class="list-item" onclick="updateCategoryUI('Men Jeans')">Men Jeans</li>
-                <li class="list-item" onclick="updateCategoryUI('Women Jeans')">Women Jeans</li>
+                <li class="list-items" onclick="updateCategoryUI('all')">All items</li>
+                <li class="list-items" onclick="updateCategoryUI('Men Shirt')">Men Shirt</li>
+                <li class="list-items" onclick="updateCategoryUI('Women Shirt')">Women Shirt</li>
+                <li class="list-items" onclick="updateCategoryUI('Men Jeans')">Men Jeans</li>
+                <li class="list-items" onclick="updateCategoryUI('Women Jeans')">Women Jeans</li>
             </ul>
+
             <div class="cards products-container" id="products">
                 <h1 class="no-data">No Data Found</h1>
             </div>
+
         </div>
 
-        <div class="right">
+        <div class="rightContainer">
 
             <div class="menu">
 
@@ -41,10 +48,8 @@
 
             </div>
 
-            <div class="order">
-                <ul id="cart-item">
+            <div class="order-container">
 
-                </ul>
             </div>
 
             <div class="total">
@@ -66,7 +71,7 @@
                     <h2 class="js-total-of-product">$00.00</h2>
                 </div>
             </div>
-            
+
             <button class="paybtn">Pay With Cashless Credit</button>
 
         </div>

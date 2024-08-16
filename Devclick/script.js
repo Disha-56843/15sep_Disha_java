@@ -10,18 +10,19 @@ function sortSearch(category, searchInputValue) {
         const matchesCategory = category === 'all' || productCategory === category
         const matchesSearch = productName.includes(searchInputValue) || productPrice.includes(searchInputValue)
 
-        if (matchesCategory && matchesSearch) {
+        if (matchesCategory && matchesSearch) 
+        {
             product.style.display = 'block'
             visibleProducts = true
-        } else {
+        } 
+        else 
+        {
             product.style.display = 'none'
         }
     })
 
     nodata.style.display = visibleProducts ? 'none' : 'block'
 }
-
-// sortSearch()
 
 function updateCategoryUI(category) {
     const categoryList = {
@@ -32,7 +33,7 @@ function updateCategoryUI(category) {
         'Women Jeans': 'Women Jeans'
     }
 
-    document.querySelectorAll('.list-item').forEach(el => {
+    document.querySelectorAll('.list-items').forEach(el => {
         if (el.innerHTML === categoryList[category]) {
             el.classList.add('select')
         } else {

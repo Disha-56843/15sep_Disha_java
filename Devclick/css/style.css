@@ -44,7 +44,7 @@ body {
     position: relative;
 }
 
-.right {
+.rightContainer {
     width: 40%;
     height: 100% !important;
     float: right;
@@ -68,16 +68,17 @@ ul {
 }
 
 ul li {
+    padding: 1%;
     display: inline;
     margin: 0 2% 0 0;
-    background-color: transparent;
 }
 
-ul li button {
-    background-color: transparent;
-    border: none;
+ul .list-items:hover {
+    padding: 1%;
+    background-color: #eab308;
+    border-radius: 20px;
+    color: #fff;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .card {
@@ -137,14 +138,14 @@ input {
     font-weight: 600;
 }
 
-.right .menu {
+.rightContainer .menu {
     margin-left: 4%;
     display: flex;
     margin-top: 3%;
     position: relative;
 }
 
-.right .menu .button2 {
+.rightContainer .menu .button2 {
     position: absolute;
     right: 4%;
     border: none;
@@ -153,7 +154,7 @@ input {
     font-weight: 600px;
 }
 
-.right .menu .button1 {
+.rightContainer .menu .button1 {
     position: absolute;
     right: 20%;
     font: weight 600px;
@@ -198,19 +199,45 @@ input {
     line-height: 3;
 }
 
-.order {
+.order-container {
     margin-top: 5%;
-    height: 264px;
+    padding: 5px;
+    height: 250px;
     overflow-y: auto;
 }
 
-.order .item h4 {
-    width: 130px;
+.orders
+{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5px;
 }
 
-.order .item h3 {
-    /* margin-top: 0; */
-    line-height: 3;
+#ordered-product-img
+{
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+}
+
+.ordered-product-name
+{
+    width: 115px;
+}
+
+.decrement
+{
+    padding: 0px 8px;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
+.increment
+{
+    padding: 0px 6px;
+    border-radius: 3px;
+    font-size: 18px;
 }
 
 #cart-item .button {
@@ -285,14 +312,6 @@ input {
     cursor: pointer;
 }
 
-ul .list-item:hover {
-    padding: 1%;
-    background-color: #eab308;
-    border-radius: 20px;
-    color: #fff;
-    cursor: pointer;
-}
-
 .cashless {
     font-size: large;
     font-weight: 500;
@@ -351,7 +370,7 @@ hr {
 .products {
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #bdbaba;
+    border: 1px solid #bababa;
 }
 
 .products:hover {

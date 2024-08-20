@@ -3,9 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="./css/style.css">
+
+    <link 
+        rel="stylesheet" 
+        href="./css/style.css"
+    >
+
 </head>
 
 <body>
@@ -18,22 +28,31 @@
 
                 <h2 class="head">Disha's Team <h2>
 
-                        <p>Location ID#SIMON123</p>
+                <p>Location ID#SIMON123</p>
 
-                        <input id="search-product" class="input" type="text">
+                <input 
+                    id="search-product" 
+                    class="input" 
+                    type="text"
+                >
 
             </div>
 
             <ul id="category-list">
-                <li class="list-items" onclick="updateCategoryUI('all')">All items</li>
+                <li 
+                    class="list-items" 
+                    onclick="updateCategoryUI('all')">
+                    All items
+                </li>
                 <li class="list-items" onclick="updateCategoryUI('Men Shirt')">Men Shirt</li>
                 <li class="list-items" onclick="updateCategoryUI('Women Shirt')">Women Shirt</li>
                 <li class="list-items" onclick="updateCategoryUI('Men Jeans')">Men Jeans</li>
                 <li class="list-items" onclick="updateCategoryUI('Women Jeans')">Women Jeans</li>
             </ul>
 
+            <h1 class="no-data">No Data Found</h1>
             <div class="cards products-container" id="products">
-                <h1 class="no-data">No Data Found</h1>
+                
             </div>
 
         </div>

@@ -25,6 +25,7 @@ function sortSearch(category, searchInputValue) {
 }
 
 function updateCategoryUI(category) {
+    updateProducts()
     const categoryList = {
         'all': 'All items',
         'Men Shirt': 'Men Shirt',
@@ -34,7 +35,7 @@ function updateCategoryUI(category) {
     }
 
     document.querySelectorAll('.list-items').forEach(el => {
-        if (el.innerHTML === categoryList[category]) {
+        if (el.innerHTML.trim() === categoryList[category]) {
             el.classList.add('select')
         } else {
             el.classList.remove('select')
@@ -60,3 +61,19 @@ document.getElementById('search-product').addEventListener('input', (event) => {
 
 sortSearch(retrieveSavedCategory, retrieveSavedSearchInputValue)
 updateCategoryUI(retrieveSavedCategory)
+
+
+// script.js
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'k') {
+        event.preventDefault(); // Prevent default action if necessary
+        const searchContainer = document.getElementById('search-product');
+        // Toggle the visibility of the search input
+        if (searchContainer.style.display === 'none' || searchContainer.style.display === '') {
+            searchContainer.style.display = 'block';
+            document.getElementById('search-product').focus();
+        } else {
+            searchContainer.style.display = 'none';
+        }
+    }
+});

@@ -1,6 +1,7 @@
 const products = [
 
     {
+        id: 1,
         name: 'STONEBERG',
         description: 'Men Formal Shirt',
         price: 1.75,
@@ -11,6 +12,7 @@ const products = [
     },
 
     {
+        id: 2,
         name: 'FIBERMILL',
         description: 'Men Printed Shirt',
         price: 11.75,
@@ -21,6 +23,7 @@ const products = [
     },
 
     {
+        id: 3,
         name: 'CHEMISTRY',
         description: 'Women Casual Shirt',
         price: 12.75,
@@ -31,6 +34,7 @@ const products = [
     },
 
     {
+        id: 4,
         name: 'TURRITOPSIS',
         description: 'Women Retro Shirts',
         price: 11.25,
@@ -41,6 +45,7 @@ const products = [
     },
 
     {
+        id: 5,
         name: 'zenesty',
         description: 'Women Casual Shirt',
         price: 13.75,
@@ -51,6 +56,7 @@ const products = [
     },
 
     {
+        id: 6,
         name: 'Spykar',
         description: 'Men Skinny Fit Jeans',
         price: 11.50,
@@ -61,6 +67,7 @@ const products = [
     },
 
     {
+        id: 7,
         name: 'JACK & JONES',
         description: 'Men Skinny Fit Jeans',
         price: 10.75,
@@ -71,6 +78,7 @@ const products = [
     },
 
     {
+        id: 8,
         name: 'TYFFYN',
         description: 'Women Black Jeans',
         price: 13.75,
@@ -81,6 +89,7 @@ const products = [
     },
 
     {
+        id: 9,
         name: 'Miss Chase',
         description: 'Women Black Jeans',
         price: 16.75,
@@ -92,62 +101,65 @@ const products = [
 ]
 
 function showProducts() {
+  const productContainer = document.querySelector('.products-container');
+  productContainer.innerHTML = ''; // Clear container before adding products
 
-    const productContainer = document.querySelector('.products-container')
+  products.forEach(product => {
+      const productDiv = document.createElement('div');
+      productDiv.setAttribute("data-id", product.id);
+      productDiv.className = 'products';
+      productDiv.style.cursor = 'pointer';
+      productDiv.setAttribute('data-category', product.category);
 
-    products.forEach(product => {
+      const productName = document.createElement('h3');
+      productName.className = 'item-name';
+      productName.innerHTML = product.name;
 
-        const productDiv = document.createElement('div')
-        productDiv.className = 'products'
-        productDiv.style.cursor = 'pointer'
-        productDiv.setAttribute('data-category', product.category)
+      const description = document.createElement('span');
+      description.className = 'description';
+      description.innerHTML = product.description;
 
-        const productName = document.createElement('h3')
-        productName.className = 'item-name'
-        productName.innerHTML = product.name
+      const bottomPartOfProductContainer = document.createElement('div');
+      bottomPartOfProductContainer.className = 'bottom-part-of-product';
 
-        const description = document.createElement('span')
-        description.className = 'description'
-        description.innerHTML = product.description
+      const dollar = document.createElement('span');
+      dollar.className = 'dollar';
+      dollar.innerHTML = '$';
 
-        const bottomPartOfProductContainer = document.createElement('div')
-        bottomPartOfProductContainer.className = 'bottom-part-of-product'
+      const price = document.createElement('span');
+      price.className = 'price-product';
+      price.innerHTML = product.price;
 
-        const doller = document.createElement('span')
-        doller.className = 'doller'
-        doller.innerHTML = '$'
+      dollar.appendChild(price);
 
-        const price = document.createElement('span')
-        price.className = 'price-product'
-        price.innerHTML = product.price
+      const image = document.createElement('img');
+      image.src = product.image;
+      image.alt = product.name;
+      image.className = 'card-img';
 
-        doller.appendChild(price)
+      bottomPartOfProductContainer.appendChild(dollar);
+      bottomPartOfProductContainer.appendChild(image);
 
-        const image = document.createElement('img')
-        image.src = product.image
-        image.alt = product.name
-        image.className = 'card-img'
+      productDiv.appendChild(productName);
+      productDiv.appendChild(description);
+      productDiv.appendChild(bottomPartOfProductContainer);
 
-        bottomPartOfProductContainer.appendChild(doller)
-        bottomPartOfProductContainer.appendChild(image)
+      productDiv.addEventListener('click', () => {
+          addToCart(product);
+          updateCart();
+      });
 
-        productDiv.appendChild(productName)
-        productDiv.appendChild(description)
-        productDiv.appendChild(bottomPartOfProductContainer)
+      productContainer.appendChild(productDiv);
+  });
 
-        productDiv.addEventListener('click', () => {
-            addToCart(product)
-            updateCart()
-        })
-
-        productContainer.appendChild(productDiv)
-
-    })
+  // Update the product availability after displaying products
+  updateProductAvailability();
 }
+
 
 function addToCart(product) {
     const cartItemContainer = document.querySelector('.order-container')
-    const productDiv = document.querySelector('.products')
+    const orderDiv = document.querySelector('.products')
 
     let existingItem = null
     const children = Array.from(cartItemContainer.children)
@@ -174,15 +186,18 @@ function addToCart(product) {
 
             const price = parseFloat(product.price)
             existingItem.querySelector('.ordered-product-price').innerHTML = `$${(price * product.quantity).toFixed(2)}`
+            const orderedProductID = document.createElement('span');
+            orderedProductID.classList.add('product-id');
+            orderedProductID.style.display = 'none'; // Hide it from view
+            orderedProductID.innerText = product.id;
+            orderDiv.appendChild(orderedProductID);
             
-            // productDiv.classList.remove('js-product-out-of-stock')
             
             updateCart()
         }
 
         else {
             alert('Cannot add more of this product to the cart. Quantity limit reached.')
-            // productDiv.classList.add('js-product-out-of-stock')
         }
 
     }
@@ -267,6 +282,13 @@ function addToCart(product) {
 
         cartItemContainer.appendChild(orderDiv)
 
+        const orderedProductID = document.createElement('span');
+        orderedProductID.classList.add('product-id');
+        orderedProductID.style.display = 'none';
+        orderedProductID.innerText = product.id;
+        orderDiv.appendChild(orderedProductID);
+
+
     }
     updateCart()
 }
@@ -292,7 +314,7 @@ function updateCart() {
     document.querySelector('.js-sales-tax').innerHTML = `$${salesTax.toFixed(2)}`
     document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(2)}`
 
-    // updateProducts()
+    updateProducts()
 }
 
 
@@ -310,9 +332,47 @@ document.getElementById('clear-all-button').addEventListener('click', function (
 
 showProducts()
 
+const retrieveSavedSearchInputValue1 =
+  localStorage.getItem("searchProduct") || "";
+const retrieveSavedCategory1 =
+  localStorage.getItem("selectedCategory") || "all";
+
 function updateProducts() {
-    document.querySelector('#products').innerHTML = ''
-    showProducts()
-    // document.querySelector('.js-update-cart').innerHTML = ''
-    // addToCart()
+  document
+    .getElementById("search-product")
+    .addEventListener("input", (event) => {
+      const searchInputValue = event.target.value;
+      const selectedCategory =
+        localStorage.getItem("selectedCategory") || "all";
+      sortSearch(selectedCategory, searchInputValue);
+      localStorage.setItem("searchProduct", searchInputValue);
+
+    });
+    document.querySelector(".products-container").innerHTML = "";
+    showProducts();
+
+  sortSearch(retrieveSavedCategory1, retrieveSavedSearchInputValue1);
+  updateCategoryUI(retrieveSavedCategory1);
 }
+
+
+function updateProductAvailability() {
+  products.forEach(product => {
+      const productElement = document.querySelector(`.products[data-id="${product.id}"]`);
+
+      if (productElement) {
+          // Find the quantity in the cart for this product
+          const quantityInCart = Array.from(document.querySelectorAll('.order-container .orders'))
+              .filter(orderDiv => parseInt(orderDiv.querySelector('.product-id').innerText) === product.id)
+              .reduce((acc, orderDiv) => acc + parseInt(orderDiv.querySelector('.quantity').innerText), 0);
+
+          // Check if the product quantity in the cart meets or exceeds the limit
+          if (quantityInCart >= product.quantity_limit) {
+              productElement.classList.add("js-product-out-of-stock");
+          } else {
+              productElement.classList.remove("js-product-out-of-stock");
+          }
+      }
+  });
+}
+

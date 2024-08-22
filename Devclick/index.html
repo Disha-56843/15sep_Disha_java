@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta 
-        name="viewport" 
+    <meta
+        name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
     <title>Shopping Cart</title>
 
-    <link 
-        rel="stylesheet" 
+    <link
+        rel="stylesheet"
         href="./css/style.css"
     >
 
@@ -21,38 +21,58 @@
 <body>
 
     <div class="container">
-
         <div class="leftContainer">
-
             <div>
-
                 <h2 class="head">Disha's Team <h2>
 
                 <p>Location ID#SIMON123</p>
 
-                <input 
-                    id="search-product" 
-                    class="input" 
+                <input
+                    id="search-product"
+                    class="input"
                     type="text"
+                    placeholder="Search by product       Ctrl+K"
                 >
-
             </div>
 
             <ul id="category-list">
-                <li 
-                    class="list-items select" 
-                    onclick="updateCategoryUI('all')">
+                <li
+                    class="list-items select"
+                    onclick="updateCategoryUI('all')"
+                >
                     All items
                 </li>
-                <li class="list-items" onclick="updateCategoryUI('Men Shirt')">Men Shirt</li>
-                <li class="list-items" onclick="updateCategoryUI('Women Shirt')">Women Shirt</li>
-                <li class="list-items" onclick="updateCategoryUI('Men Jeans')">Men Jeans</li>
-                <li class="list-items" onclick="updateCategoryUI('Women Jeans')">Women Jeans</li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Men Shirt')"
+                >
+                    Men Shirt
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Women Shirt')"
+                >
+                    Women Shirt
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Men Jeans')"
+                >
+                    Men Jeans
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Women Jeans')"
+                >
+                    Women Jeans
+                </li>
             </ul>
 
             <h1 class="no-data">No Data Found</h1>
-            <div class="cards products-container" id="products">
-                
+            <div
+                class="cards products-container"
+            >
+                <!-- Insert the product via js` -->
             </div>
 
         </div>
@@ -62,11 +82,16 @@
             <div class="menu">
 
                 <h2>Current Order</h2>
-                <button class="bg-red button1 padding" id="clear-all-button">Clear All</button>
+                <button
+                    class="bg-red button1 padding"
+                    id="clear-all-button"
+                >
+                    Clear All
+                </button>
                 <button class="button2 padding">Setting</button>
 
             </div>
-            
+
             <div class="order-container">
 
             </div>

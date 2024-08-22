@@ -25,7 +25,7 @@ function sortSearch(category, searchInputValue) {
 }
 
 function updateCategoryUI(category) {
-    updateProducts()
+    //updateProducts()
     const categoryList = {
         'all': 'All items',
         'Men Shirt': 'Men Shirt',

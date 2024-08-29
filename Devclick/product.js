@@ -165,25 +165,27 @@ function addToCart(product) {
 
   const existingProduct = cart.find(existingProductInCart => existingProductInCart.id === product.id);
 
+  
   if (existingProduct) {
+      
+    //   console.log(existingProduct)
+        if (existingProduct.quantity < product.quantity_limit) {
+        existingProduct.quantity++;
 
-    if (existingProduct.quantity < product.quantity_limit) {
-      existingProduct.quantity++;
 
-
-      const allOrderItems = cartItemContainer.querySelectorAll(".orders");
-      allOrderItems.forEach(orderContainer => {
-        const productNameElement = orderContainer.querySelector(".ordered-product-name");
-        if (productNameElement && productNameElement.innerHTML === product.name) {
-          orderContainer.querySelector(".quantity").innerHTML = existingProduct.quantity;
-          orderContainer.querySelector(".ordered-product-price").innerHTML = `$${(
-            parseFloat(product.price) * existingProduct.quantity
-          ).toFixed(2)}`;
+            const allOrderItems = cartItemContainer.querySelectorAll(".orders");
+            allOrderItems.forEach(orderContainer => {
+            const productName = orderContainer.querySelector(".ordered-product-name");
+            if (productName && productName.innerHTML === product.name) {
+                orderContainer.querySelector(".quantity").innerHTML = existingProduct.quantity;
+                orderContainer.querySelector(".ordered-product-price").innerHTML = `$${(
+                    parseFloat(product.price) * existingProduct.quantity
+                ).toFixed(2)}`;
+            }
+        });
+        } else {
+             alert('Cannot add more of this product to the cart. Quantity limit reached.');
         }
-      });
-    } else {
-      alert('Cannot add more of this product to the cart. Quantity limit reached.');
-    }
   } else {
 
     cart.push({
@@ -261,12 +263,22 @@ function addToCart(product) {
     orderedProductPrice.classList.add("ordered-product-price");
     orderedProductPrice.innerHTML = `$${product.price}`;
 
+    const cancleProduct = document.createElement('button')
+    cancleProduct.className = 'cancle-product'
+    cancleProduct.innerHTML = 'x'
+    cancleProduct.addEventListener('click', function () {
+
+        orderDiv.remove()
+
+    })
+
     orderDiv.appendChild(orderedProductImage);
     orderDiv.appendChild(orderedProductName);
     orderDiv.appendChild(decrement);
     orderDiv.appendChild(quantity);
     orderDiv.appendChild(increment);
     orderDiv.appendChild(orderedProductPrice);
+    orderDiv.appendChild(cancleProduct)
 
     cartItemContainer.appendChild(orderDiv);
   }

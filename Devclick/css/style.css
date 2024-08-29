@@ -259,6 +259,14 @@ ul .list-items:hover {
   font-size: 18px;
 }
 
+.cancle-product {
+  padding: 0px 6px;
+  border-radius: 3px;
+  font-size: 18px;
+  color: #ef4444;
+  background: #fee2e2;
+}
+
 #cart-item .button {
   height: 40px;
   width: 40px;
@@ -338,6 +346,7 @@ hr {
   opacity: 0.5;
   cursor: not-allowed !important;
 }
+
 .js-product-out-of-stock:hover {
   border-color: #aca7a7;
   opacity: 0.5;

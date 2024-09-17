@@ -31,14 +31,14 @@ body {
   background-color: #ffffff;
   margin-left: auto;
   margin-right: auto;
-  width: 97%;
+  width: 99%;
   max-width: 1280px;
   height: 720px;
   box-shadow: 2px 0px 5px #d1cece outset;
   border-radius: 5px;
 }
 
-.leftContainer {
+.left-container {
   width: 60%;
   height: 100vh;
   float: left;
@@ -69,19 +69,19 @@ input {
   cursor: pointer;
 }
 
-ul {
+#category-list {
   list-style: none;
   margin-top: 3%;
-  margin-left: 4%;
+  margin-left: 2%;
 }
 
-ul li {
+#category-list li {
   padding: 1%;
   display: inline;
-  margin: 0 2% 0 0;
+  margin: 0 0.5% 0 0;
 }
 
-ul .list-items:hover {
+#category-list .list-items:hover {
   padding: 1%;
   background-color: #eab308;
   border-radius: 20px;
@@ -90,11 +90,27 @@ ul .list-items:hover {
 }
 
 .select {
-  padding: 1%;
   background-color: #eab308 !important;
   border-radius: 20px;
   color: #fff;
   cursor: pointer;
+}
+
+.sort-product-list {
+  /* width: 15px; */
+  background-color: #dddcdc;
+  border: 1px solid #bababa;
+  padding: 0%;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.sort-product {
+
+  width: 134px;
+  font-size: 14px;
+  background-color: #dddcdc;
+
 }
 
 .no-data {
@@ -188,20 +204,20 @@ ul .list-items:hover {
   line-height: 3.5;
 }
 
-.rightContainer {
+.right-container {
   width: 40%;
   height: 100% !important;
   float: right;
 }
 
-.rightContainer .menu {
+.right-container .menu {
   margin-left: 4%;
   display: flex;
   margin-top: 3%;
   position: relative;
 }
 
-.rightContainer .menu .button1 {
+.right-container .menu .button1 {
   position: absolute;
   right: 20%;
   font: weight 600px;
@@ -212,7 +228,7 @@ ul .list-items:hover {
   font-size: medium;
 }
 
-.rightContainer .menu .button2 {
+.right-container .menu .button2 {
   position: absolute;
   right: 4%;
   border: none;
@@ -265,6 +281,7 @@ ul .list-items:hover {
   font-size: 18px;
   color: #ef4444;
   background: #fee2e2;
+  cursor: pointer;
 }
 
 #cart-item .button {
@@ -343,6 +360,7 @@ hr {
 }
 
 .js-product-out-of-stock {
+  /* pointer-events: none; */
   opacity: 0.5;
   cursor: not-allowed !important;
 }

@@ -3,8 +3,8 @@ function sortSearch(category, searchInputValue) {
   const nodata = document.querySelector(".no-data");
 
   document.querySelectorAll(".products").forEach((product) => {
-    const productName = product.querySelector(".item-name").innerHTML;
-    const productPrice = product.querySelector(".price-product").innerHTML;
+    const productName = product.querySelector(".item-name").innerText;
+    const productPrice = product.querySelector(".price-product").innerText;
     const productCategory = product.getAttribute("data-category");
     const isOutOfStock = product.classList.contains("js-product-out-of-stock");
 
@@ -12,25 +12,28 @@ function sortSearch(category, searchInputValue) {
     const matchesSearch = productName.includes(searchInputValue) || productPrice.includes(searchInputValue);
 
     if (matchesSearch) {
-        if(category === 'all'){
-            product.style.display = "block";
-            if(isOutOfStock){
-              product.style.opacity = 0.5
+      if (category === 'all') {
+        product.style.display = "block";
+        if (isOutOfStock) {
+          product.style.opacity = 0.5
+          visibleProducts = true;
 
-              return
-            }
-            product.style.opacity = 1
-        } else {
-            if (matchesCategory && !isOutOfStock) {
-                product.style.display = "block";
-                product.style.opacity = 1;
-            } else {
-                product.style.display = "none";
-            }
-        } 
+          return
+        }
+        product.style.opacity = 1
         visibleProducts = true;
+      } else {
+        if (matchesCategory && !isOutOfStock) {
+          product.style.display = "block";
+          product.style.opacity = 1;
+          visibleProducts = true;
+
+        } else {
+          product.style.display = "none";
+        }
+      }
     } else {
-        product.style.display = 'none'
+      product.style.display = 'none'
     }
   });
 

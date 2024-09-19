@@ -164,7 +164,6 @@ function updateProductAvailability() {
     })
 }
 
-// script js 
 function sortSearch(category, searchInputValue) {
     let visibleProducts = false
     const nodata = document.querySelector('.no-data')
@@ -230,32 +229,21 @@ function updateCategoryUI(category) {
 }
 
 
-// script js over 
-
-
 function addToCart(product) {
-    const cartItemContainer = document.querySelector('.order-container')
 
     const existingProduct = cart.find(existingProductInCart => existingProductInCart.id === product.id)
-    const orderContainer = document.querySelector(`.orders-${product.id}`)
+    const purchasedProductContainer = document.querySelector(`.orders-${product.id}`)
 
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
-        orderContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
-        // existingProduct.price = product.price * existingProduct.quantity
+        purchasedProductContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
 
         updateCart()
         updateProductAvailability()
-    }
-
-    else {
+    } else {
 
         cart.push({ ...product, quantity: 1 })
 
-        // const cartProduct = cart.find(cartItem => cartItem.id === product.id)
-        // cart.forEach(product => {
-
-            }
-    // )}
+    }
 
     renderCart()
     updateCart()
@@ -267,49 +255,45 @@ function renderCart() {
     const cartItemContainer = document.querySelector('.order-container')
 
     cartItemContainer.innerHTML = ''
-    cart.forEach(cartProducts => {
+    cart.forEach(cartProduct => {
 
         cartItemContainer.innerHTML +=
-            `<div class="orders orders-${cartProducts.id}">
-                <img src="${cartProducts.image}" alt="${cartProducts.name}" style="height: 60px; width: 75px; border-radius: 5px;" />
-                <h4 class="ordered-product-name">${cartProducts.name}</h4>
+            `<div class="orders orders-${cartProduct.id}">
+                <img src="${cartProduct.image}" alt="${cartProduct.name}" style="height: 60px; width: 75px; border-radius: 5px;" />
+                <h4 class="ordered-product-name">${cartProduct.name}</h4>
                 <button class="decrement">-</button>
-                <span class="quantity">${cartProducts.quantity}</span>
+                <span class="quantity">${cartProduct.quantity}</span>
                 <button class="increment">+</button>
-                <span class="ordered-product-price">$${cartProducts.price * cartProducts.quantity}</span>
-                <button class="cancel-product">x</button>
+                <span class="ordered-product-price">$${(cartProduct.price * cartProduct.quantity).toFixed(2)}</span>
+                <button class="remove-product">x</button>
             </div>`
 
+    })
 
+    addToCartEventHandlers()
 
-        const orderContainer = document.querySelector(`.orders-${cartProducts.id}`)
+}
 
-        // const cartProduct = cart.find(cartItem => cartItem.id === product.id)          
-        // orderContainer.forEach(cartProducts => {
+function addToCartEventHandlers() {
 
-            
+    cart.forEach(cartProduct => {
 
-        orderContainer.querySelector('.decrement').addEventListener('click', function () {
-            // const cartProduct = cart.find(cartItem => cartItem.id === product.id)
+        const purchasedProductContainer = document.querySelector(`.orders-${cartProduct.id}`)
 
-            if (cartProducts && cartProducts.quantity > 1) {
-                orderContainer.querySelector('.quantity').innerHTML = --cartProducts.quantity;
+        purchasedProductContainer.querySelector('.decrement').addEventListener('click', function () {
 
-                // console.log(cartProducts.quantity)
-                // orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
-                //     parseFloat(cartProducts.price) * cartProducts.quantity
-                // ).toFixed(2)}`
+            if (cartProduct.quantity > 1) {
+                purchasedProductContainer.querySelector('.quantity').innerHTML = --cartProduct.quantity
 
                 renderCart()
                 updateCart()
                 updateProductAvailability()
             } else {
-                if (cartProducts && cartProducts.quantity === 1 ) {
+                if (cartProduct.quantity === 1) {
                     if (confirm('Do you want to remove this item from the cart?')) {
-                        cart.splice(cart.findIndex(cartItem => cartItem.id === cartProducts.id), 1)
+                        cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
 
-                        // cartProduct.remove()
-                        orderContainer.remove()
+                        purchasedProductContainer.remove()
                         renderCart()
                         updateCart()
                         updateProductAvailability()
@@ -319,21 +303,15 @@ function renderCart() {
 
                     return
                 }
-                orderContainer.remove()
+                purchasedProductContainer.remove()
             }
-        }
-        )
+        })
 
-        orderContainer.querySelector('.increment').addEventListener('click', function () {
-            const cartProduct = cart.find(cartItem => cartItem.id === cartProducts.id)
-            const quantityLimit = cartProducts.quantity_limit
+        purchasedProductContainer.querySelector('.increment').addEventListener('click', function () {
+            const quantityLimit = cartProduct.quantity_limit
 
-            if (cartProducts && cartProducts.quantity < quantityLimit) {
-                orderContainer.querySelector('.quantity').innerHTML = ++cartProducts.quantity;
-
-                orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
-                    parseFloat(cartProducts.price) * cartProducts.quantity
-                ).toFixed(2)}`
+            if (cartProduct.quantity < quantityLimit) {
+                purchasedProductContainer.querySelector('.quantity').innerHTML = ++cartProduct.quantity;
 
                 renderCart()
                 updateCart()
@@ -344,24 +322,18 @@ function renderCart() {
         })
 
 
-        orderContainer.querySelector('.cancel-product').addEventListener('click', function () {
-            cart.splice(cart.findIndex(cartItem => cartItem.id === cartProducts.id), 1)
+        purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
+            cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
 
-
-            // cartProducts.remove()
-            orderContainer.remove()
+            purchasedProductContainer.remove()
             renderCart()
             updateCart()
             updateProductAvailability()
 
         })
-
-
     })
 
-
 }
-
 
 function updateCart() {
     const cartItemContainer = document.querySelector('.order-container')
@@ -385,9 +357,7 @@ function updateCart() {
         2
     )}`
     document.querySelector('.js-sales-tax').innerHTML = `$${salesTax.toFixed(2)}`
-    document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(
-        2
-    )}`
+    document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(2)}`
 
     updateProducts()
 }
@@ -428,137 +398,174 @@ showProducts()
 
 function sortProductsByNameAndPrice(sortCriteria) {
     const productContainer = document.querySelector('.products-container')
-    const productElements = Array.from(productContainer.querySelectorAll('.products'))
     const sortIconContainer = document.querySelector('.js-sort-icon')
 
     sortIconContainer.innerHTML = ''
 
     if (sortCriteria === 'select') {
 
-        // console.log(productElements)        
-
         updateProducts()
 
     } else if (sortCriteria === 'Sort by: name') {
-        const aToZSortIcon = document.createElement('button')
-        aToZSortIcon.classList.add('fa-solid', 'fa-arrows-up-down')
-        sortIconContainer.appendChild(aToZSortIcon)
 
-        aToZSortIcon.addEventListener('click', () => {
-            productElements.sort((productElement1, productElement2) => {
-                const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
-                const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
-                return productName1.localeCompare(productName2)
+        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="js-a-to-z-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
+
+        document.querySelector('.js-a-to-z-sort').addEventListener('click', () => {
+            const aToZSorting = products.toSorted((product1, product2) => {
+
+                return product1.name.toLowerCase().localeCompare(product2.name.toLowerCase())
             })
 
+            productContainer.innerHTML = ''
+            aToZSorting.forEach((product) => {
 
-            // const sortedproductelement = productElements.sort()
-            productElements.forEach(productElement => productContainer.appendChild(productElement))
+                productContainer.innerHTML +=
+                    `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
+                        <h3 class="item-name">${product.name}</h3>
+                        <span class="description">${product.description}</span>
+                        <div class="bottom-part-of-product">
+                            <span class="dollar">$<span class="price-product">${product.price}</span></span>
+                            <img src="${product.image}" alt="${product.name}" class="card-img">
+                        </div>
+                    </div>`
+                updateProductAvailability()
+            })
 
+            aToZSorting.forEach((product) => {
 
-            aToZSortIcon.classList.remove('fa-solid', 'fa-arrows-up-down')
-            sortIconContainer.removeChild(aToZSortIcon)
+                document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
+                    addToCart(product)
+                    updateCart()
 
-            const zToASortIcon = document.createElement('button')
-            zToASortIcon.classList.add('fa-solid', 'fa-arrow-up')
-            sortIconContainer.appendChild(zToASortIcon)
-
-            zToASortIcon.addEventListener('click', () => {
-                productElements.sort((productElement1, productElement2) => {
-                    const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
-                    const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
-                    return productName2.localeCompare(productName1)
                 })
 
-                productElements.forEach(productElement => productContainer.appendChild(productElement))
+            })
 
+            sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-z-to-a-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
 
-                zToASortIcon.classList.remove('fa-solid', 'fa-arrow-up')
-                sortIconContainer.removeChild(zToASortIcon)
+            document.querySelector('.js-z-to-a-sort').addEventListener('click', () => {
+                const zToASorting = products.toSorted((product1, product2) => {
+                    return product2.name.toLowerCase().localeCompare(product1.name.toLowerCase())
+                })
 
-                const sortBackNormal = document.createElement('button')
-                sortBackNormal.classList.add('fa-solid', 'fa-arrow-down')
-                sortIconContainer.appendChild(sortBackNormal)
+                productContainer.innerHTML = ''
+                zToASorting.forEach((product) => {
 
-                sortBackNormal.addEventListener('click', () => {
+                    productContainer.innerHTML +=
+                        `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
+                            <h3 class="item-name">${product.name}</h3>
+                            <span class="description">${product.description}</span>
+                            <div class="bottom-part-of-product">
+                                <span class="dollar">$<span class="price-product">${product.price}</span></span>
+                                <img src="${product.image}" alt="${product.name}" class="card-img">
+                            </div>
+                        </div>`
+                    updateProductAvailability()
+                })
+                zToASorting.forEach((product) => {
+                    document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
+                        addToCart(product)
+                        updateCart()
+                    })
 
-                    updateProducts()
+                })
 
-                    sortBackNormal.classList.remove('fa-solid', 'fa-arrow-down')
-                    sortIconContainer.removeChild(sortBackNormal)
+                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
 
-                    const resetsort = document.createElement('button')
-                    resetsort.classList.add('fa-solid', 'fa-arrows-up-down')
-                    sortIconContainer.appendChild(resetsort)
+                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
 
+                    products.forEach(() => {
+
+                        updateProducts()
+                        sortProductsByNameAndPrice(sortCriteria)
+                    })
                 })
             })
         })
 
 
     } else if (sortCriteria === 'Sort by: price') {
-        const lowToHighpriceShortIcon = document.createElement('button')
-        lowToHighpriceShortIcon.classList.add('fa-solid', 'fa-arrows-up-down')
-        sortIconContainer.appendChild(lowToHighpriceShortIcon)
+        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="fa-solid fa-arrows-up-down js-low-to-high-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
 
-        lowToHighpriceShortIcon.addEventListener('click', () => {
-            productElements.sort((productElement1, productElement2) => {
-                const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
-                const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
-                return productPrice1 - productPrice2
+        document.querySelector('.js-low-to-high-sort').addEventListener('click', () => {
+            const lowToHighSorting = products.toSorted((product1, product2) => {
+                return product1.price - product2.price
             })
 
+            productContainer.innerHTML = ''
+            lowToHighSorting.forEach((product) => {
 
-            productElements.forEach(productElement => productContainer.appendChild(productElement))
+                productContainer.innerHTML +=
+                    `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
+                        <h3 class="item-name">${product.name}</h3>
+                        <span class="description">${product.description}</span>
+                        <div class="bottom-part-of-product">
+                            <span class="dollar">$<span class="price-product">${product.price}</span></span>
+                            <img src="${product.image}" alt="${product.name}" class="card-img">
+                        </div>
+                    </div>`
+                updateProductAvailability()
+            })
+            lowToHighSorting.forEach((product) => {
+                document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
+                    addToCart(product)
+                    updateCart()
+                })
 
+            })
 
-            lowToHighpriceShortIcon.classList.remove('fa-solid', 'fa-arrows-up-down')
-            sortIconContainer.removeChild(lowToHighpriceShortIcon)
+            sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-high-to-low-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
 
-            const highToLowPriceShortIcon = document.createElement('button')
-            highToLowPriceShortIcon.classList.add('fa-solid', 'fa-arrow-up')
-            sortIconContainer.appendChild(highToLowPriceShortIcon)
+            document.querySelector('.js-high-to-low-sort').addEventListener('click', () => {
+                const highToLowSorting = products.toSorted((product1, product2) => {
 
-            highToLowPriceShortIcon.addEventListener('click', () => {
-                productElements.sort((productElement1, productElement2) => {
-                    const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
-                    const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
-                    return productPrice2 - productPrice1
+                    return product2.price - product1.price
+                })
+
+                productContainer.innerHTML = ''
+                highToLowSorting.forEach((product) => {
+
+                    productContainer.innerHTML +=
+                        `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
+                                <h3 class="item-name">${product.name}</h3>
+                                <span class="description">${product.description}</span>
+                                <div class="bottom-part-of-product">
+                                    <span class="dollar">$<span class="price-product">${product.price}</span></span>
+                                    <img src="${product.image}" alt="${product.name}" class="card-img">
+                                </div>
+                            </div>`
+                    updateProductAvailability()
+
+                })
+
+                highToLowSorting.forEach((product) => {
+
+                    document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
+                        addToCart(product)
+                        updateCart()
+                    })
                 })
 
 
-                productElements.forEach(productElement => productContainer.appendChild(productElement))
+                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
+
+                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
+
+                    products.forEach(() => {
 
 
-                highToLowPriceShortIcon.classList.remove('fa-solid', 'fa-arrow-up')
-                sortIconContainer.removeChild(highToLowPriceShortIcon)
+                        updateProducts()
+                        sortProductsByNameAndPrice(sortCriteria)
 
-                const sortBackNormal = document.createElement('button')
-                sortBackNormal.classList.add('fa-solid', 'fa-arrow-down')
-                sortIconContainer.appendChild(sortBackNormal)
-
-                sortBackNormal.addEventListener('click', () => {
-
-                    updateProducts()
-
-                    sortBackNormal.classList.remove('fa-solid', 'fa-arrow-down')
-                    sortIconContainer.removeChild(sortBackNormal)
-
-
-                    const resetsort = document.createElement('button')
-                    resetsort.classList.add('fa-solid', 'fa-arrows-up-down')
-                    sortIconContainer.appendChild(resetsort)
+                    })
 
                 })
             })
         })
 
-    } else {
-        console.warn('Unknown sort criteria:', sortCriteria)
     }
-
-
 }
+
 
 document.querySelector('.sort-product').addEventListener('change', (event) => {
     const selectedSortCriteria = event.target.value
@@ -581,10 +588,9 @@ document.addEventListener('keydown', function (event) {
     }
 })
 
-// Local Storage start 
 
-const retrieveSavedSearchInputValue =
-    localStorage.getItem('searchProduct') || ''
+
+const retrieveSavedSearchInputValue = localStorage.getItem('searchProduct') || ''
 const retrieveSavedCategory = localStorage.getItem('selectedCategory') || 'all'
 
 
@@ -601,4 +607,3 @@ document.getElementById('search-product').addEventListener('input', (event) => {
 sortSearch(retrieveSavedCategory, retrieveSavedSearchInputValue)
 updateCategoryUI(retrieveSavedCategory)
 
-// local Storage end 

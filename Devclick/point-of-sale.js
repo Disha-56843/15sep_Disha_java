@@ -58,7 +58,7 @@ const products = [
         id: 6,
         name: 'Spykar',
         description: 'Men Skinny Fit Jeans',
-        price: 11.5,
+        price: 11.50,
         image:
             'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/i/8/k/32-udjeno1328-u-s-polo-assn-denim-co-original-imagypf6b4g5rfe6.jpeg?q=70',
         alt: 'Men_Jeans',
@@ -82,7 +82,7 @@ const products = [
         id: 8,
         name: 'TYFFYN',
         description: 'Women Black Jeans',
-        price: 13.5,
+        price: 13.50,
         image:
             'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/x/h/p/28-wd-black-2z-nucouths-original-imahfysehpazsnns.jpeg?q=70',
         alt: 'Women_Jeans',
@@ -110,7 +110,7 @@ function showProducts() {
 
     products.forEach((product) => {
 
-        productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
+        productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer">
             <h3 class="item-name">${product.name}</h3>
             <span class="description">${product.description}</span>
             <div class="bottom-part-of-product">
@@ -168,38 +168,44 @@ function sortSearch(category, searchInputValue) {
     let visibleProducts = false
     const nodata = document.querySelector('.no-data')
 
-    document.querySelectorAll('.products').forEach((product) => {
-        const productName = product.querySelector('.item-name').innerText
-        const productPrice = product.querySelector('.price-product').innerText
-        const productCategory = product.getAttribute('data-category')
-        const isOutOfStock = product.classList.contains('js-product-out-of-stock')
 
+
+    products.forEach((product) => {
+
+        const productElements = document.getElementsByClassName(`products-${product.id}`)
+        const productElement = productElements.length > 0 ? productElements[0] : null
+
+        const productName = product.name
+        const productPrice = product.price.toString()
+        const productCategory = product.category
+        const isOutOfStock = productElement.classList.contains('js-product-out-of-stock')
         const matchesCategory = category === 'all' || productCategory === category
-        const matchesSearch = productName.includes(searchInputValue) || productPrice.includes(searchInputValue)
+        const matchesSearch = productName.toLowerCase().includes(searchInputValue.toLowerCase()) || productPrice.includes(searchInputValue)
 
         if (matchesSearch) {
             if (category === 'all') {
-                product.style.display = 'block'
+
+                productElement.style.display = 'block'
                 if (isOutOfStock) {
-                    product.style.opacity = 0.5
+                    productElement.style.opacity = 0.5
                     visibleProducts = true
 
                     return
                 }
-                product.style.opacity = 1
+                productElement.style.opacity = 1
                 visibleProducts = true
             } else {
                 if (matchesCategory && !isOutOfStock) {
-                    product.style.display = 'block'
-                    product.style.opacity = 1
+                    productElement.style.display = 'block'
+                    productElement.style.opacity = 1
                     visibleProducts = true
 
                 } else {
-                    product.style.display = 'none'
+                    productElement.style.display = 'none'
                 }
             }
         } else {
-            product.style.display = 'none'
+            productElement.style.display = 'none'
         }
     })
 
@@ -215,11 +221,11 @@ function updateCategoryUI(category) {
         'Women Jeans': 'Women Jeans',
     }
 
-    document.querySelectorAll('.list-items').forEach((el) => {
-        if (el.innerHTML.trim() === categoryList[category]) {
-            el.classList.add('select')
+    document.querySelectorAll('.list-items').forEach((element) => {
+        if (element.innerHTML.trim() === categoryList[category]) {
+            element.classList.add('select')
         } else {
-            el.classList.remove('select')
+            element.classList.remove('select')
         }
     })
     const searchInputValue = document.getElementById('search-product').value
@@ -235,14 +241,26 @@ function addToCart(product) {
     const purchasedProductContainer = document.querySelector(`.orders-${product.id}`)
 
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
-        purchasedProductContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
+        existingProduct.quantity++
+
+
+        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+        localStorage.setItem('cart', cartString)
+        // localStorage.setItem(`cartProduct-${product.id}-quantity`, existingProduct.quantity)
+        // localStorage.setItem('cart', JSON.stringify(cart))
 
         updateCart()
         updateProductAvailability()
-    } else {
+    }
+
+    else {
 
         cart.push({ ...product, quantity: 1 })
 
+        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+        localStorage.setItem('cart', cartString)
+        // localStorage.setItem(`cartProduct-${product.id}-quantity`, 1)
+        // localStorage.setItem('cart', JSON.stringify(cart))
     }
 
     renderCart()
@@ -283,7 +301,14 @@ function addToCartEventHandlers() {
         purchasedProductContainer.querySelector('.decrement').addEventListener('click', function () {
 
             if (cartProduct.quantity > 1) {
-                purchasedProductContainer.querySelector('.quantity').innerHTML = --cartProduct.quantity
+                cartProduct.quantity--
+
+                const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+                localStorage.setItem('cart', cartString)
+                // localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
+                // localStorage.setItem('cart', JSON.stringify(cart))
+                // console.log(JSON.stringify(cart))
+
 
                 renderCart()
                 updateCart()
@@ -293,7 +318,11 @@ function addToCartEventHandlers() {
                     if (confirm('Do you want to remove this item from the cart?')) {
                         cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
 
-                        purchasedProductContainer.remove()
+                        // purchasedProductContainer.remove()
+                        // localStorage.setItem('cart', JSON.stringify(cart))
+                        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+                        localStorage.setItem('cart', cartString)
+
                         renderCart()
                         updateCart()
                         updateProductAvailability()
@@ -311,8 +340,12 @@ function addToCartEventHandlers() {
             const quantityLimit = cartProduct.quantity_limit
 
             if (cartProduct.quantity < quantityLimit) {
-                purchasedProductContainer.querySelector('.quantity').innerHTML = ++cartProduct.quantity;
+                cartProduct.quantity++
 
+                const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+                localStorage.setItem('cart', cartString)
+                // localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
+                // localStorage.setItem('cart', JSON.stringify(cart))
                 renderCart()
                 updateCart()
                 updateProductAvailability()
@@ -324,8 +357,11 @@ function addToCartEventHandlers() {
 
         purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
             cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
-
+            // localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
             purchasedProductContainer.remove()
+            // localStorage.setItem('cart', JSON.stringify(cart))
+            const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+            localStorage.setItem('cart', cartString)
             renderCart()
             updateCart()
             updateProductAvailability()
@@ -334,6 +370,63 @@ function addToCartEventHandlers() {
     })
 
 }
+
+function loadCart() {
+
+    // const localstorageProductKeys = Object.keys(localStorage)
+    // cart = []
+
+    // localstorageProductKeys.forEach(localstorageProductKey => {
+    //     if (localstorageProductKey.startsWith('cartProduct-')) {
+    //         const id = key.split('-')[1]
+    //         const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
+
+
+    //         const product = products.find(product => product.id.toString() === id)
+    //         if (product) {
+
+    //             const existingProduct = cart.find(cartItem => cartItem.id.toString() === id)
+    //             if (existingProduct) {
+
+    //                 existingProduct.quantity = quantity
+    //             } else {
+
+    //                 cart.push({ ...product, quantity })
+    //             }
+    //         }
+    //     }
+    // })
+
+    // const cartData = localStorage.getItem('cart')
+    // cart = cartData ? JSON.parse(cartData) : []
+
+
+    const cartString = localStorage.getItem('cart')
+    cart = []
+
+    if (cartString) {
+       
+        const cartItems = cartString.split(';')
+        cartItems.forEach(item => {
+            const [id, quantity] = item.split(':')
+            const product = products.find(product => product.id.toString() === id)
+            if (product) {
+                cart.push({ ...product, quantity: parseInt(quantity) })
+            }
+        })
+    }
+
+
+    renderCart()
+    updateCart()
+    updateProductAvailability()
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    loadCart()
+
+})
 
 function updateCart() {
     const cartItemContainer = document.querySelector('.order-container')
@@ -357,7 +450,9 @@ function updateCart() {
         2
     )}`
     document.querySelector('.js-sales-tax').innerHTML = `$${salesTax.toFixed(2)}`
-    document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(2)}`
+    document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(
+        2
+    )}`
 
     updateProducts()
 }
@@ -383,6 +478,8 @@ document.getElementById('clear-all-button').addEventListener('click', function (
 
             while (cartItemList.firstChild) {
                 cartItemList.removeChild(cartItemList.firstChild)
+                localStorage.clear()
+
             }
         }
 
@@ -396,201 +493,17 @@ document.getElementById('clear-all-button').addEventListener('click', function (
 
 showProducts()
 
-function sortProductsByNameAndPrice(sortCriteria) {
-    const productContainer = document.querySelector('.products-container')
-    const sortIconContainer = document.querySelector('.js-sort-icon')
-
-    sortIconContainer.innerHTML = ''
-
-    if (sortCriteria === 'select') {
-
-        updateProducts()
-
-    } else if (sortCriteria === 'Sort by: name') {
-
-        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="js-a-to-z-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
-
-        document.querySelector('.js-a-to-z-sort').addEventListener('click', () => {
-            const aToZSorting = products.toSorted((product1, product2) => {
-
-                return product1.name.toLowerCase().localeCompare(product2.name.toLowerCase())
-            })
-
-            productContainer.innerHTML = ''
-            aToZSorting.forEach((product) => {
-
-                productContainer.innerHTML +=
-                    `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
-                        <h3 class="item-name">${product.name}</h3>
-                        <span class="description">${product.description}</span>
-                        <div class="bottom-part-of-product">
-                            <span class="dollar">$<span class="price-product">${product.price}</span></span>
-                            <img src="${product.image}" alt="${product.name}" class="card-img">
-                        </div>
-                    </div>`
-                updateProductAvailability()
-            })
-
-            aToZSorting.forEach((product) => {
-
-                document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
-                    addToCart(product)
-                    updateCart()
-
-                })
-
-            })
-
-            sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-z-to-a-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
-
-            document.querySelector('.js-z-to-a-sort').addEventListener('click', () => {
-                const zToASorting = products.toSorted((product1, product2) => {
-                    return product2.name.toLowerCase().localeCompare(product1.name.toLowerCase())
-                })
-
-                productContainer.innerHTML = ''
-                zToASorting.forEach((product) => {
-
-                    productContainer.innerHTML +=
-                        `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
-                            <h3 class="item-name">${product.name}</h3>
-                            <span class="description">${product.description}</span>
-                            <div class="bottom-part-of-product">
-                                <span class="dollar">$<span class="price-product">${product.price}</span></span>
-                                <img src="${product.image}" alt="${product.name}" class="card-img">
-                            </div>
-                        </div>`
-                    updateProductAvailability()
-                })
-                zToASorting.forEach((product) => {
-                    document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
-                        addToCart(product)
-                        updateCart()
-                    })
-
-                })
-
-                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
-
-                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
-
-                    products.forEach(() => {
-
-                        updateProducts()
-                        sortProductsByNameAndPrice(sortCriteria)
-                    })
-                })
-            })
-        })
-
-
-    } else if (sortCriteria === 'Sort by: price') {
-        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="fa-solid fa-arrows-up-down js-low-to-high-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
-
-        document.querySelector('.js-low-to-high-sort').addEventListener('click', () => {
-            const lowToHighSorting = products.toSorted((product1, product2) => {
-                return product1.price - product2.price
-            })
-
-            productContainer.innerHTML = ''
-            lowToHighSorting.forEach((product) => {
-
-                productContainer.innerHTML +=
-                    `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
-                        <h3 class="item-name">${product.name}</h3>
-                        <span class="description">${product.description}</span>
-                        <div class="bottom-part-of-product">
-                            <span class="dollar">$<span class="price-product">${product.price}</span></span>
-                            <img src="${product.image}" alt="${product.name}" class="card-img">
-                        </div>
-                    </div>`
-                updateProductAvailability()
-            })
-            lowToHighSorting.forEach((product) => {
-                document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
-                    addToCart(product)
-                    updateCart()
-                })
-
-            })
-
-            sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-high-to-low-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
-
-            document.querySelector('.js-high-to-low-sort').addEventListener('click', () => {
-                const highToLowSorting = products.toSorted((product1, product2) => {
-
-                    return product2.price - product1.price
-                })
-
-                productContainer.innerHTML = ''
-                highToLowSorting.forEach((product) => {
-
-                    productContainer.innerHTML +=
-                        `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
-                                <h3 class="item-name">${product.name}</h3>
-                                <span class="description">${product.description}</span>
-                                <div class="bottom-part-of-product">
-                                    <span class="dollar">$<span class="price-product">${product.price}</span></span>
-                                    <img src="${product.image}" alt="${product.name}" class="card-img">
-                                </div>
-                            </div>`
-                    updateProductAvailability()
-
-                })
-
-                highToLowSorting.forEach((product) => {
-
-                    document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
-                        addToCart(product)
-                        updateCart()
-                    })
-                })
-
-
-                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
-
-                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
-
-                    products.forEach(() => {
-
-
-                        updateProducts()
-                        sortProductsByNameAndPrice(sortCriteria)
-
-                    })
-
-                })
-            })
-        })
-
-    }
-}
-
-
-document.querySelector('.sort-product').addEventListener('change', (event) => {
-    const selectedSortCriteria = event.target.value
-    sortProductsByNameAndPrice(selectedSortCriteria)
-})
-
 document.addEventListener('keydown', function (event) {
     if (event.ctrlKey && (event.key === 'k' || event.key === 'K')) {
         event.preventDefault()
-        const searchContainer = document.getElementById('search-product')
-        if (
-            searchContainer.style.display === 'none' ||
-            searchContainer.style.display === ''
-        ) {
-            searchContainer.style.display = 'block'
-            document.getElementById('search-product').focus()
-        } else {
-            searchContainer.style.display = 'none'
-        }
+
+        document.getElementById('search-product').focus()
+
     }
 })
 
-
-
-const retrieveSavedSearchInputValue = localStorage.getItem('searchProduct') || ''
+const retrieveSavedSearchInputValue =
+    localStorage.getItem('searchProduct') || ''
 const retrieveSavedCategory = localStorage.getItem('selectedCategory') || 'all'
 
 
@@ -606,4 +519,3 @@ document.getElementById('search-product').addEventListener('input', (event) => {
 
 sortSearch(retrieveSavedCategory, retrieveSavedSearchInputValue)
 updateCategoryUI(retrieveSavedCategory)
-

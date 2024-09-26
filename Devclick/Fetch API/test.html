@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <img src="">
+    <div></div>
+
+    <script>
+
+        // fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json')
+        
+        // .then(response => {
+
+        //         if (!response.ok) {
+                    
+        //             throw new Error("Could not fetch resource");
+        //         }
+        //         return response.json()
+        //     })
+        //     .then((data) => {
+                
+                
+        //         document.querySelector('div').innerHTML = data[1].name
+                
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
+            
+            
+            // Blob (image display)
+            fetch('https://lh3.googleusercontent.com/a/ACg8ocIAgbsbkRncTbA0WB_wI6MvuTUANHWiknzBHV_TwOZoGjbSAstI=s96-c')
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error("Could not fetch resource");
+                }
+                return response.blob()
+            })
+            .then((blob) => {
+                const imageUrl = URL.createObjectURL(blob)
+                document.querySelector('img').src = imageUrl
+
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    </script>
+
+
+</body>
+
+</html>

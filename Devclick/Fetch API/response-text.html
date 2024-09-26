@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>response.text()</title>
+</head>
+
+<body>
+
+    <script>
+
+        fetch('https://codetogo.io/api/users.xml')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok')
+                }
+                return response.blob()
+            })
+            .then(blob => {
+                const reader = new FileReader()
+                reader.onload = function (event) {
+                    const xmlText = event.target.result
+                    const parser = new DOMParser()
+                    const xmlDoc = parser.parseFromString(xmlText,
+                        'text/xml')
+
+                    // Now you can work with the xmlDoc
+                    console.log(xmlDoc)
+                }
+                reader.readAsText(blob)
+            })
+            .catch(error => {
+                console.error(`There was a problem with
+                       the fetch operation:`, error)
+            })
+
+
+
+    </script>
+
+</body>
+
+</html>

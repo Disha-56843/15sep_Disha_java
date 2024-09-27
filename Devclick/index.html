@@ -15,24 +15,30 @@
         rel="stylesheet"
         href="./css/style.css"
     >
-
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" 
+    />
 </head>
 
 <body>
 
     <div class="container">
         <div class="left-container">
-            <div>
-                <h2 class="head">Disha's Team <h2>
+            <div class="left-container-header">
+                <div>
+                        <h2 class="head">Disha's Team </h2>
 
                         <p>Location ID#SIMON123</p>
-
-                        <input
-                            id="search-product"
-                            class="input"
-                            type="text"
-                            placeholder="Search by product    Ctrl+K"
-                        >
+                </div>
+                <input
+                    id="search-product"
+                    class="input"
+                    type="text"
+                    placeholder="Search by product    Ctrl+K"
+                >
             </div>
 
             <ul id="category-list">
@@ -66,38 +72,29 @@
                 >
                     Women Jeans
                 </li>
-                
+
                 <li class="sort-product-list">
-                    <span>Sort by: </span>
                     <select 
-                        name="" 
-                        id=""
                         class="sort-product"
                     >
-                        <option>
+                        <option
+                            value="select"
+                        >
                             Select
                         </option>
                         <option 
-                            value="Name: A to Z"
+                            value="Sort by: name"
                         >
-                            Name: A to Z
+                            Sort by: name
                         </option>
                         <option 
-                            value="Name: Z to A"
+                            value="Sort by: price"
                         >
-                            Name: Z to A
+                            Sort by: price
                         </option>
-                        <option 
-                            value="Price: Low to High"
-                        >
-                            Price: Low to High
-                        </option>
-                        <option 
-                            value="Price: High to Low"
-                        >
-                            Price: High to Low
-                        </option>
+                        
                     </select>
+                    <span class="js-sort-icon sort-button"></span>
                 </li>
             </ul>
                 
@@ -152,10 +149,7 @@
         </div>
     </div>
 
-    <!-- <script src="./product.js"></script>
-    <script src="./script.js"></script> -->
-
-    <script src="point-of-sale.js"></script>
+    <script src="./point-of-sale.js"></script>
 </body>
 
 </html>

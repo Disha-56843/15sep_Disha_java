@@ -352,6 +352,7 @@ function addToCartEventHandlers() {
             updateProductAvailability()
         })
 
+            })
 
         purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
             cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
@@ -365,7 +366,7 @@ function addToCartEventHandlers() {
             updateProductAvailability()
 
         })
-    })
+    
 
 }
 
@@ -425,6 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCart()
 
 })
+
 
 function updateCart() {
     const cartItemContainer = document.querySelector('.order-container')
@@ -490,6 +492,136 @@ document.getElementById('clear-all-button').addEventListener('click', function (
 })
 
 showProducts()
+
+function sortProductsByNameAndPrice(sortCriteria) {
+    const productContainer = document.querySelector('.products-container')
+    const productElements = Array.from(productContainer.querySelectorAll('.products'))
+    const sortIconContainer = document.querySelector('.js-sort-icon')
+
+    sortIconContainer.innerHTML = ''
+
+    if (sortCriteria === 'select') {
+
+        updateProducts()
+
+    } else if (sortCriteria === 'Sort by: name') {
+
+        sortIconContainer.innerHTML = '<button class="fa-solid fa-arrows-up-down"></button>'
+        const aToZSortIcon = sortIconContainer.querySelector('.fa-arrows-up-down')
+
+        aToZSortIcon.addEventListener('click', () => {
+            
+            productElements.sort((productElement1, productElement2) => {
+                const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
+                const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
+                return productName1.localeCompare(productName2)
+            })
+            
+                productElements.forEach(productElement => {
+                    if (!productElement.classList.contains('js-product-out-of-stock')) {
+                        productContainer.appendChild(productElement)
+                    }
+                })
+
+            sortIconContainer.innerHTML = '<button class="fa-solid fa-arrow-up"></button>'
+
+            const zToASortIcon = sortIconContainer.querySelector('.fa-arrow-up')
+
+            zToASortIcon.addEventListener('click', () => {
+                productElements.sort((productElement1, productElement2) => {
+                    const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
+                    const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
+                    return productName2.localeCompare(productName1)
+                })
+
+                productElements.forEach(productElement => {
+                    if (!productElement.classList.contains('js-product-out-of-stock')) {
+                        productContainer.appendChild(productElement)
+                    }
+                })
+
+                sortIconContainer.innerHTML = '<button class="fa-solid fa-arrow-down"></button>'
+
+                const sortBackNormal = sortIconContainer.querySelector('.fa-arrow-down')
+
+                sortBackNormal.addEventListener('click', () => {
+
+                    updateProducts()
+
+                    sortBackNormal.classList.remove('fa-solid', 'fa-arrow-down')
+                    sortIconContainer.removeChild(sortBackNormal)
+
+                    sortProductsByNameAndPrice(sortCriteria)
+
+                })
+
+            })
+        })
+
+
+
+    } else if (sortCriteria === 'Sort by: price') {
+
+        sortIconContainer.innerHTML = '<button class="fa-solid fa-arrows-up-down"></button>'
+        const lowToHighpriceShortIcon = sortIconContainer.querySelector('.fa-arrows-up-down')
+
+        lowToHighpriceShortIcon.addEventListener('click', () => {
+
+            productElements.sort((productElement1, productElement2) => {
+                const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
+                const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
+                return productPrice1 - productPrice2
+            })
+
+            productElements.forEach(productElement => {
+                if (!productElement.classList.contains('js-product-out-of-stock')) {
+                    productContainer.appendChild(productElement)
+                }
+            })
+
+            sortIconContainer.innerHTML = '<button class="fa-solid fa-arrow-up"></button>'
+
+            const highToLowPriceShortIcon = sortIconContainer.querySelector('.fa-arrow-up')
+
+            highToLowPriceShortIcon.addEventListener('click', () => {
+                productElements.sort((productElement1, productElement2) => {
+                    const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
+                    const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
+                    return productPrice2 - productPrice1
+                })
+
+                productElements.forEach(productElement => {
+                    if (!productElement.classList.contains('js-product-out-of-stock')) {
+                        productContainer.appendChild(productElement)
+                    }
+                })
+
+                sortIconContainer.innerHTML = '<button class="fa-solid fa-arrow-down"></button>'
+
+                const sortBackNormal = sortIconContainer.querySelector('.fa-arrow-down')
+
+                sortBackNormal.addEventListener('click', () => {
+
+                    updateProducts()
+
+                    sortBackNormal.classList.remove('fa-solid', 'fa-arrow-down')
+                    sortIconContainer.removeChild(sortBackNormal)
+
+                    sortProductsByNameAndPrice(sortCriteria)
+
+                })
+            })
+        })
+
+    }
+
+
+}
+
+document.querySelector('.sort-product').addEventListener('change', (event) => {
+    const selectedSortCriteria = event.target.value
+    sortProductsByNameAndPrice(selectedSortCriteria)
+})
 
 document.addEventListener('keydown', function (event) {
     if (event.ctrlKey && (event.key === 'k' || event.key === 'K')) {
